@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="soon">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TSGS: Improving Gaussian Splatting for Transparent Surface Reconstruction via Normal and De-lighting Priors</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script> -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <!-- <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet"> -->
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <!-- <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"> -->
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/comparison.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <title>Image Centering</title>
+    <style>
+        .image-container {
+            text-align: center;
+        }
+        .image-container img {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+<!-- authors -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">TSGS: Improving Gaussian Splatting for Transparent Surface Reconstruction via Normal and De-lighting Priors</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="">Mingwei Li</a><sup>1,2</sup></span>&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="">Pu Pang</a><sup>3,2</sup>&nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="">Hehe Fan</a><sup>1</sup>&nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="">Hua Huang</a><sup>4</sup>&nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="">Yi Yang</a><sup>1,&#9993;</sup>&nbsp;&nbsp;
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Zhejiang University</span>&nbsp;&nbsp;
+            <span class="author-block"><sup>2</sup>Zhongguancun Academy, Beijing</span>
+            <span class="author-block"><sup>3</sup>Xi'an Jiaotong University</span>
+            <span class="author-block"><sup>4</sup>Beijing Normal University</span>
+            <br>
+            <span class="email-link">
+              <!-- <a href="mailto:maikeyeweicai@gmail.com">maikeyeweicai@gmail.com</a> -->
+              &nbsp;&nbsp;
+              <!-- <a href="mailto:tonghe90@gmail.com">tonghe90@gmail.com</a> -->
+            </span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href="paper/tsgs.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2504.07808"
+                   class="external-link button is-normal is-rounded is-dark">
+                   <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span> -->
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/TSGS"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span> -->
+              <!-- Dataset Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a> -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- teaser.png -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img id="teaser" height="100%" src="./static/images/teaser_02_00.jpg" alt="TSGS teaser."/>
+      <p>
+        We present <b>TSGS</b>, a framework for high-fidelity transparent surface reconstruction from multi-views.     
+        (a) We introduce <b>TransLab</b>, a novel dataset specifically designed for evaluating transparent object reconstruction. TransLab comprises 8 diverse, high-resolution 360° scenes in laboratory settings. It features a wide array of challenging transparent glassware, including test tubes, beakers, volumetric flasks etc.
+        (b) <b>Comparative results</b> on TransLab demonstrate the superior capability of our proposed TSGS method in accurately reconstructing geometry and appearance compared to prior state-of-the-art approaches.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Video -->
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3" style="text-align: center;">Videos</h2>
+    <video controls width="100%" height="100%" src="./static/videos/final.mp4" type="video/mp4" autoplay muted loop playsinline></video> 
+  </div>
+</section> -->
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Reconstructing transparent surfaces is essential for tasks such as robotic manipulation in labs, yet it poses a significant challenge for 3D reconstruction techniques like 3D Gaussian Splatting (3DGS). These methods often encounter a transparency-depth dilemma, where the pursuit of photorealistic rendering through standard alpha-blending undermines geometric precision, resulting in considerable depth estimation errors for transparent materials. 
+            To address this issue, we introduce Transparent Surface Gaussian Splatting (TSGS), a new framework that separates geometry learning from appearance refinement. In the geometry learning stage, TSGS focuses on geometry by using specular-suppressed inputs to accurately represent surfaces. In the second stage, TSGS improves visual fidelity through anisotropic specular modeling, crucially maintaining the established opacity to ensure geometric accuracy. To enhance depth inference, TSGS employs a first-surface depth extraction method. This technique uses a sliding window over alpha-blending weights to pinpoint the most likely surface location and calculates a robust weighted average depth. To evaluate the transparent surface reconstruction task under realistic conditions, we collect a TransLab dataset that includes complex transparent laboratory glassware. Extensive experiments on TransLab show that TSGS achieves accurate geometric reconstruction and realistic rendering of transparent objects simultaneously within the efficient 3DGS framework. 
+          Specifically, TSGS significantly surpasses current leading methods, achieving a 37.3% reduction in chamfer distance and an 8.0% improvement in F1 score compared to the top baseline. 
+          Additionally, TSGS maintains high-quality novel view synthesis, evidenced by a 0.41dB gain in PSNR, demonstrating that TSGS overcomes the transparency-depth dilemma. 
+          </p>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <img src="./static/images/pipeline.jpg"
+               class="framework-image"
+               alt="TSGS overview."/>
+          <p>
+            (a) The two-stage training process. In Stage 1, 3D Gaussians are optimized using geometric priors and de-lighted image inputs. In Stage 2, we fix the opacity parameters and optimize the 3DGS using GT images with specular highlights. (b) The inference process utilizes the trained model to extract the first-surface depth map, which is then used for mesh reconstruction. (c) Details of the first-surface depth extraction module, which employs a sliding window to find the maximum-weight window along the ray and computes depth via weighted averaging within this window.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+<!-- Comparisons -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- <h2 class="title is-3" style="text-align: center;">Comparisons</h2>
+      DTU
+      <div class="content">
+        <h2 class="title is-4">DTU</h2>
+        <div class="button-container" id="btn1">
+          <button onclick="changeImages(event, 'cmp1','./static/images/cmp/2dgs/37_2dgs.png', './static/images/cmp/ours/37_ours.png')" class="cmp-button cmp-btn-checked">scan_37</button>
+          <button onclick="changeImages(event, 'cmp1','./static/images/cmp/2dgs/63_2dgs.png', './static/images/cmp/ours/63_ours.png')" class="cmp-button">scan_63</button>
+          <button onclick="changeImages(event, 'cmp1','./static/images/cmp/2dgs/65_2dgs.png', './static/images/cmp/ours/65_ours.png')" class="cmp-button">scan_65</button>
+          <button onclick="changeImages(event, 'cmp1','./static/images/cmp/2dgs/110_2dgs.png', './static/images/cmp/ours/110_ours.png')" class="cmp-button">scan_110</button>
+          <button onclick="changeImages(event, 'cmp1','./static/images/cmp/2dgs/114_2dgs.png', './static/images/cmp/ours/114_ours.png')" class="cmp-button">scan_114</button>
+        </div>
+        <div class="cmp-container" id="cmp1">
+            <div class="bottom">
+                <img src="./static/images/cmp/ours/37_ours.png"/>
+            </div>
+            <div class="top">
+                <img src="./static/images/cmp/2dgs/37_2dgs.png"/>
+            </div>
+            <div class="cmp-slider"></div>
+        </div>
+      </div> -->
+        
+      <br/>
+      <div class="image-container">
+        <h2 class="title is-4">Qualitative Results on TransLab</h2>
+            <img style="width: 90%;" src="./static/images/sub1_00.jpg"/>
+            </object>
+            <img style="width: 90%;" src="./static/images/sub2_00.jpg"/>
+            </object>
+      </div>
+        
+      <br/>
+      <div class="image-container">
+        <h2 class="title is-4">Quantitative Results on TransLab</h2>
+          <img style="width: 80%;" src="./static/images/translab_geo.png"/>
+        </object>
+          <img style="width: 80%;" src="./static/images/translab_appearance.png"/>
+        </object>
+      </div>
+
+      <br/>
+      <div class="image-container">
+
+      </div>
+
+    </div>
+  <script src="./static/js/comparison.js"></script>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>
+
+      ```</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            We thank <a href="https://github.com/nerfies/nerfies.github.io" target="_blank">Nerfies</a> for their amazing template.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

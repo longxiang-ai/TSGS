@@ -1,0 +1,131 @@
+.button-container {
+    /* 水平居中 */
+    width: 960px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.cmp-button {
+    /* 按钮样式 */
+    width: 100%;
+    height: 30px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+
+    background-color: rgba(0, 0, 0, 0.04);
+    color: rgb(0, 0, 0);
+    border: rgba(128, 128, 128, 0.0) 1px solid;
+    border-radius: 10px;
+    cursor: pointer;
+
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/* 未被选中 */
+.cmp-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 被选中的btn（加2个图像）hover覆盖为白色。 */
+.cmp-btn-checked {
+    background-color: white;
+    border: rgba(224, 15, 60, 0.3) 2px solid;
+    color: rgb(224, 15, 60);
+}
+.cmp-btn-checked:hover {
+    background-color: white;
+}
+
+.cmp-container {
+    width: 960px;
+    height: 540px;
+    /* 溢出隐藏 */
+    overflow: hidden;
+    /* 相对定位 */
+    position: relative;
+    user-select: none;
+}
+
+.top,
+.bottom {
+    width: 100%;
+    height: 100%;
+    /* 绝对定位 */
+    position: absolute;
+    display: flex;
+    /* 设置left、top=0保证设置 */
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* 初始化 */
+.top {
+    width: 51.5%;
+}
+
+
+.top img,
+.bottom img {
+    height: 100%; 
+    max-width: none;
+    max-height: none;
+}
+
+/* 目前cmp-slider由中间的圆和before、after的竖棒构成 */
+.cmp-slider{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    opacity: 1.0;
+    background-color: rgb(255, 255, 255, 0.3);
+    /* border: rgb(255, 255, 255) 2px solid; */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 10px rgba(0,0,0,1);
+    /* 设置指针 */
+    /* cursor: */
+}
+/* 暂时用circle代表arrow */
+.cmp-slider::after,
+.cmp-slider::before{
+    content: "";
+    width: 2px;
+    height: 9999px;
+    /* 绝对定位 水平居中 */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); 
+    /* 顶层 */
+    z-index: 9999;
+    /* box-shadow: 3px 0 6px rgba(0,0,0,0.15); */
+    /* 过渡 */
+    background-color: rgb(255, 255, 255);
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(0,0,0,1);
+}
+.cmp-slider::after{
+    top: 30px;
+}
+.cmp-slider::before{
+    bottom: 30px;
+}
+
+.cmp-slider:hover {
+    opacity: 1;
+}
+
+.sliding {
+    pointer-events: none;
+    /* 设置sliding时其他属性 */
+    cursor: pointer;
+}
+
+
+
