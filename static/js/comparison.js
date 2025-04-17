@@ -51,14 +51,10 @@ cmpContainers.forEach(container => {
 // 预加载所有图片
 document.addEventListener("DOMContentLoaded", function() {
     const images = [
-        './static/images/cmp/2dgs/37_2dgs.png', './static/images/cmp/ours/37_ours.png',
-        './static/images/cmp/2dgs/63_2dgs.png', './static/images/cmp/ours/63_ours.png',
-        './static/images/cmp/2dgs/65_2dgs.png', './static/images/cmp/ours/65_ours.png',
-        './static/images/cmp/2dgs/110_2dgs.png', './static/images/cmp/ours/110_ours.png',
-        './static/images/cmp/2dgs/114_2dgs.png', './static/images/cmp/ours/114_ours.png',
-        './static/images/cmp/2dgs/bonsai_2dgs.png', './static/images/cmp/ours/bonsai_ours.png',
-        './static/images/cmp/2dgs/Caterpillar_2dgs.png', './static/images/cmp/ours/Caterpillar_ours.png',
-        './static/images/cmp/2dgs/counter_2dgs.png', './static/images/cmp/ours/counter_ours.png'
+        './static/images/cmp/pgsr/processed/pgsr_cropped_2.png', './static/images/cmp/ours/processed/Ours_cropped_2.png',
+        './static/images/cmp/pgsr/processed/pgsr_cropped_3.png', './static/images/cmp/ours/processed/Ours_cropped_3.png',
+        './static/images/cmp/pgsr/processed/pgsr_cropped_5.png', './static/images/cmp/ours/processed/Ours_cropped_5.png',
+        './static/images/cmp/pgsr/processed/pgsr_cropped_8.png', './static/images/cmp/ours/processed/Ours_cropped_8.png',
     ];
     
     images.forEach(src => preloadImage(src));
