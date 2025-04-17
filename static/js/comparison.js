@@ -61,8 +61,13 @@ document.addEventListener("DOMContentLoaded", function() {
         './static/images/cmp/2dgs/counter_2dgs.png', './static/images/cmp/ours/counter_ours.png'
     ];
     
-
     images.forEach(src => preloadImage(src));
+    
+    // 为每个比较容器设置初始高度
+    const cmpContainers = document.querySelectorAll('.cmp-container');
+    cmpContainers.forEach(container => {
+        adjustContainerHeight(container);
+    });
 });
 
 function preloadImage(src) {
@@ -82,8 +87,32 @@ function changeImages(event, cmpId, imgSrc1, imgSrc2) {
     const topImg = cmpContainer.querySelector('.top img');
     const bottomImg = cmpContainer.querySelector('.bottom img');
     if (!topImg || !bottomImg) return;
-    topImg.src = imgSrc1;
-    bottomImg.src = imgSrc2;
+    
+    // 获取容器当前宽度
+    const containerWidth = cmpContainer.offsetWidth;
+    
+    // 创建新图像对象来获取图像尺寸
+    const img = new Image();
+    img.onload = function() {
+        // 计算新的高度，保持图像宽高比
+        const aspectRatio = img.height / img.width;
+        const newHeight = containerWidth * aspectRatio;
+        
+        // 调整容器高度
+        cmpContainer.style.height = newHeight + 'px';
+        
+        // 替换图像
+        topImg.src = imgSrc1;
+        bottomImg.src = imgSrc2;
+    };
+    img.onerror = function() {
+        console.error('Failed to load image: ' + imgSrc1);
+        // 即使加载失败也替换图像
+        topImg.src = imgSrc1;
+        bottomImg.src = imgSrc2;
+    };
+    img.src = imgSrc1; // 使用第一张图像来计算比例
+    
     // 获取当前按钮的父元素容器
     const buttonContainer = event.target.parentElement;
     
@@ -95,6 +124,25 @@ function changeImages(event, cmpId, imgSrc1, imgSrc2) {
 
     // 为当前点击的按钮添加 .cmp-btn-checked 类
     event.target.classList.add('cmp-btn-checked');
+}
 
+// 调整容器高度的函数
+function adjustContainerHeight(container) {
+    const img = container.querySelector('.bottom img') || container.querySelector('.top img');
+    if (!img) return;
+    
+    const containerWidth = container.offsetWidth;
+    
+    // 如果图片已加载，直接调整高度
+    if (img.complete) {
+        const aspectRatio = img.naturalHeight / img.naturalWidth;
+        container.style.height = (containerWidth * aspectRatio) + 'px';
+    } else {
+        // 如果图片未加载，等待加载完成后再调整
+        img.onload = function() {
+            const aspectRatio = img.naturalHeight / img.naturalWidth;
+            container.style.height = (containerWidth * aspectRatio) + 'px';
+        };
+    }
 }
 
