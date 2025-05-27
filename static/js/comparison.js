@@ -142,3 +142,55 @@ function adjustContainerHeight(container) {
     }
 }
 
+// 复制 BibTeX 内容的函数
+function copyBibtex(button) {
+    const codeElement = document.getElementById('bibtex-code');
+    const textToCopy = codeElement.textContent.trim();
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            // 复制成功后的反馈
+            const originalText = button.textContent;
+            const originalStyle = button.style.background;
+            
+            button.textContent = 'Copied!';
+            button.style.background = '#27ae60';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = originalStyle;
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy BibTeX: ', err);
+            alert('Copy failed, please copy manually.');
+        });
+    } else {
+        // 回退方案：创建一个临时文本区域来复制内容
+        const textArea = document.createElement('textarea');
+        textArea.value = textToCopy;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.select();
+        
+        try {
+            document.execCommand('copy');
+            const originalText = button.textContent;
+            const originalStyle = button.style.background;
+            
+            button.textContent = 'Copied!';
+            button.style.background = '#27ae60';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = originalStyle;
+            }, 2000);
+        } catch (err) {
+            console.error('Copy failed: ', err);
+            alert('Your browser does not support automatic copying, please copy manually.');
+        } finally {
+            document.body.removeChild(textArea);
+        }
+    }
+}
+

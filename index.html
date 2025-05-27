@@ -263,17 +263,26 @@
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>
-      @misc{li2025tsgs,
-        title={TSGS: Improving Gaussian Splatting for Transparent Surface Reconstruction via Normal and De-lighting Priors}, 
-        author={Mingwei Li and Pu Pang and Hehe Fan and Hua Huang and Yi Yang},
-        year={2025},
-        eprint={2504.12799},
-        archivePrefix={arXiv},
-        primaryClass={cs.CV},
-        url={https://arxiv.org/abs/2504.12799}, 
-      }
-</code></pre>
+    <div style="position: relative; background: #f8f9fa; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+      <button onclick="copyBibtex(this)" 
+              class="copy-bibtex-btn"
+              style="position: absolute; top: 15px; right: 15px; 
+                     background: #e74c3c; color: white; border: none; 
+                     padding: 8px 16px; border-radius: 6px; 
+                     font-size: 14px; font-weight: 500; cursor: pointer; 
+                     transition: all 0.3s ease; z-index: 10;">
+        Copy
+      </button>
+      <pre style="margin: 0; padding: 20px; background: transparent; border: none; overflow-x: auto;"><code id="bibtex-code" style="font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.6; color: #2c3e50;">@misc{li2025tsgs,
+  title={TSGS: Improving Gaussian Splatting for Transparent Surface Reconstruction via Normal and De-lighting Priors}, 
+  author={Mingwei Li and Pu Pang and Hehe Fan and Hua Huang and Yi Yang},
+  year={2025},
+  eprint={2504.12799},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2504.12799}, 
+}</code></pre>
+    </div>
   </div>
 </section>
 

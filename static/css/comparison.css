@@ -127,5 +127,12 @@
     cursor: pointer;
 }
 
+/* 复制按钮的悬停效果 */
+.copy-bibtex-btn:hover {
+    background: #c0392b !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
 
 
