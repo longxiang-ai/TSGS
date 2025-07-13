@@ -4,3 +4,8 @@ plyfile
 opencv-python
 lpips
 trimesh
+pyexr
+tqdm
+imageio
+tensorboard
+tensorboardX

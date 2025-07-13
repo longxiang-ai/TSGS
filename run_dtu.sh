@@ -1,0 +1,1 @@
+python scripts/run_dtu.py --out_name final --normal --use_asg --gpu_id 0 --normal_cos_threshold_iter 3000 --eval --render_iteration 30000 --num_cluster 5 --sd_normal_until_iter 15000 --ncc_loss_from_iter 7000 --nofix_param

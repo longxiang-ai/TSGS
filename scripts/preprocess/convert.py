@@ -11,6 +11,8 @@ def init_colmap(args):
     use_gpu = 1 if not args.no_gpu else 0
     scene_list = os.listdir(args.data_path)
     for scene in scene_list:
+        if not os.path.isdir(os.path.join(args.data_path, scene)):
+            continue
         scene_path = os.path.join(args.data_path, scene)
         os.makedirs(scene_path + "/sparse", exist_ok=True)
 

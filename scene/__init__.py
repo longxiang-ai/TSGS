@@ -15,8 +15,8 @@ import json
 from utils.system_utils import searchForMaxIteration
 from scene.dataset_readers import sceneLoadTypeCallbacks
 from scene.gaussian_model import GaussianModel
+from scene.specular_model import SpecularModel
 from arguments import ModelParams
-from utils.camera_utils import cameraList_from_camInfos, camera_to_JSON
 import numpy as np
 import torch
 
@@ -44,11 +44,17 @@ class Scene:
         self.test_cameras = {}
 
         if os.path.exists(os.path.join(args.source_path, "sparse")):
-            scene_info = sceneLoadTypeCallbacks["Colmap"](args.source_path, args.images, args.eval)
+            scene_info = sceneLoadTypeCallbacks["Colmap"](args.source_path, args.images, args.eval, use_delight=args.delight, use_normal=args.normal, mask_background=args.mask_background, use_delighted_normal=args.use_delighted_normal, use_transparencies_map=args.use_transparencies_map, not_delight_only_transparent=args.not_delight_only_transparent)
         elif os.path.exists(os.path.join(args.source_path, "transforms_train.json")):
-            print("Found transforms_train.json file, assuming Blender data set!")
-            scene_info = sceneLoadTypeCallbacks["Blender"](args.source_path, args.white_background, args.eval)
+            if "relight_dataset" in args.source_path:
+                print("Found transforms_train.json file, assuming Synthetic4Relight data set!")
+                scene_info = sceneLoadTypeCallbacks["Synthetic4Relight"](args.source_path, args.white_background, args.eval,
+                                                            )
+            else:
+                print("Found transforms_train.json file, assuming Blender data set!")
+                scene_info = sceneLoadTypeCallbacks["Blender"](args.source_path, args.white_background, args.eval)
         else:
+            print(f"Could not recognize scene type! {args.source_path}")
             assert False, "Could not recognize scene type!"
 
         if not self.loaded_iter:
@@ -60,6 +66,8 @@ class Scene:
                 camlist.extend(scene_info.test_cameras)
             if scene_info.train_cameras:
                 camlist.extend(scene_info.train_cameras)
+            
+            from utils.camera_utils import camera_to_JSON
             for id, cam in enumerate(camlist):
                 json_cams.append(camera_to_JSON(id, cam))
             with open(os.path.join(self.model_path, "cameras.json"), 'w') as file:
@@ -73,6 +81,7 @@ class Scene:
         print(f"cameras_extent {self.cameras_extent}")
 
         self.multi_view_num = args.multi_view_num
+        from utils.camera_utils import cameraList_from_camInfos
         for resolution_scale in resolution_scales:
             print("Loading Training Cameras")
             self.train_cameras[resolution_scale] = cameraList_from_camInfos(scene_info.train_cameras, resolution_scale, args)

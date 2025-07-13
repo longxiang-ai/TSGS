@@ -1,0 +1,1560 @@
+{
+    "intl": {
+        "locale": "en-US",
+        "messages": {
+            "companyName": "Cursor",
+            "errorId": {
+                "noRemainingRewardCodes": "Due to tremendous demand, the offer is no longer available. Please check tomorrow to see if it is available.",
+                "missingRequiredMetadata": "You must be logged in to verify. Log in to your account then try again."
+            },
+            "lowRewardPool": null,
+            "optIn": "Yes, send me {company} marketing communications about exclusive sales, special offers, latest products and more",
+            "step": {
+                "personalInfo": {
+                    "subtitle": "Verify you're a student at a degree-granting school. You must use a .edu email and it must match the email on your Cursor account.",
+                    "title": "Unlock 1 Free Year of Cursor",
+                    "submitButtonText": "Verify My Student Status"
+                },
+                "sso": {
+                    "title": null,
+                    "subtitle": null,
+                    "login": null
+                },
+                "docUpload": {
+                    "title": null,
+                    "subtitle": null
+                },
+                "success": {
+                    "title": "You've been verified",
+                    "subtitle": " If you did not use your .edu email associated with your Cursor account, the discount will not be applied.",
+                    "redirectUrl": "https://www.cursor.com/student-verified",
+                    "redirectButtonText": "Apply Discount",
+                    "emailNotification": "Return to Cursor to finish applying your discount."
+                },
+                "pending": {
+                    "titleCountdown": null,
+                    "titleReview": null,
+                    "subtitleCountdown": null,
+                    "turnaroundTime": null,
+                    "subtitle2": null
+                },
+                "emailLoop": {
+                    "title": null,
+                    "subtitleWithoutEmail": null,
+                    "skipEmail": null
+                },
+                "consolation": {
+                    "title": null,
+                    "subtitle": null,
+                    "verificationOnly": null,
+                    "redirectUrl": null
+                },
+                "error": {
+                    "errorId": {
+                        "expiredProgram": {
+                            "title": null,
+                            "buttonText": null,
+                            "redirectUrl": "https://www.sheerid.com/shoppers/"
+                        },
+                        "inactiveProgram": {
+                            "title": null,
+                            "buttonText": null,
+                            "redirectUrl": "https://www.sheerid.com/shoppers/"
+                        },
+                        "missingRequiredMetadata": {
+                            "title": "Please log in.",
+                            "buttonText": null,
+                            "redirectUrl": null
+                        },
+                        "noRemainingRewardCodes": {
+                            "title": null,
+                            "buttonText": null,
+                            "redirectUrl": "https://www.sheerid.com/shoppers/"
+                        }
+                    }
+                },
+                "collectIdentifier": {
+                    "submitButton": null,
+                    "inputExplanation": null
+                },
+                "completeAuthentication": {
+                    "title": null,
+                    "subtitle": null,
+                    "manuallyVerifyButton": null
+                },
+                "override": {
+                    "title": null,
+                    "subtitle": null,
+                    "subtitle2": null,
+                    "verificationOverrideCodeLabel": null,
+                    "submitOverrideCodeButtonLabel": null
+                }
+            },
+            "page_instructions3": "3. Use the promo code during checkout to redeem the offer",
+            "page_instructions2": "2. After successful verification, you'll receive a single-use promo code",
+            "splashVerificationUrl": "https://services.sheerid.com/verify/681044b7729fba7beccd3565/",
+            "page_instructions1": "1. Verify your student status with SheerID by filling in the above verification form. Offer available to students enrolled in educational classes for which you can earn credit towards a diploma, degree or professional license",
+            "page_title": "An Exclusive Student Offer - Just for You",
+            "page_instructions": "To get the discount:",
+            "uploadOnlyFilePickerButtonText": "Upload File",
+            "splash": {
+                "lightboxTriggerText": "Click here to verify your discount eligibility",
+                "headerText": "This is a page that would be on your site"
+            }
+        }
+    },
+    "customCss": "@import url('https://fonts.googleapis.com/css?family=Helvetica:400,400i,700');\n\n.sid-form-wrapper {\n    font-family: 'Helvetica', sans-serif;\n    background-color: #ffffff;\n    color: #000000 !important;\n}\n\n.sid-btn {\n    color: #ffffff;\n    background-color: #000000;\n    border-color: #000000;\n}\n\n.sid-form-wrapper {\n    background-color: #ffffff;\n}\n.sid-how-verify-works__tooltip {\n    background-color: #ffffff;\n}\n.sid-how-verify-works__caret {\n    border-bottom: 15px solid #ffffff;\n}\n\n.sid-link,\n.sid-link:link,\n.sid-link:visited,\n.sid-link:hover,\n.sid-link:active {\n    color: #006ded;\n}\n\n.sid-header__title {\n    color: #000000;\n}\n\n.sid-field__label-explanation {\n    color: #586581;\n}\n\n\n",
+    "logoUrl": "https://assets-resources.sheerid.com/simple/68104494729fba7beccd33dc/images/logo-1746416729758.png",
+    "themeChoices": {
+        "logoUrl": "https://assets-resources.sheerid.com/simple/68104494729fba7beccd33dc/images/logo-1746416729758.png",
+        "font": null,
+        "backgroundColor": null,
+        "primaryFontColor": null,
+        "buttonColor": null,
+        "buttonFontColor": null,
+        "linkColor": null,
+        "h1FontColor": null,
+        "helperFontColor": null,
+        "customCss": null,
+        "landingPage": {
+            "logoUrl": null,
+            "backgroundImageUrl": null,
+            "backgroundColor": null,
+            "primaryFontColor": null,
+            "layout": "fullRight"
+        }
+    },
+    "privacyPolicyUrl": "https://www.cursor.com/privacy",
+    "openOrgSearchEnabled": false,
+    "isSmsNotifierConfigured": false,
+    "docUploadEnabled": true,
+    "emailLoopEnabled": true,
+    "ssoEnabled": true,
+    "overrideEnabled": false,
+    "threatMetrixEnabled": true,
+    "ipqsDeviceFingerprintEnabled": true,
+    "idCheckAddOnEnabled": false,
+    "remainingRewardCodes": null,
+    "config": {
+        "countries": [
+            "CN",
+            "PR",
+            "PS",
+            "PT",
+            "PW",
+            "PY",
+            "QA",
+            "AD",
+            "AE",
+            "AF",
+            "AG",
+            "AI",
+            "AL",
+            "AM",
+            "AN",
+            "AO",
+            "AR",
+            "AS",
+            "AT",
+            "RE",
+            "AU",
+            "AW",
+            "AZ",
+            "RO",
+            "BA",
+            "BB",
+            "RS",
+            "BD",
+            "BE",
+            "BF",
+            "BG",
+            "RW",
+            "BH",
+            "BI",
+            "BJ",
+            "BM",
+            "BN",
+            "BO",
+            "SA",
+            "SB",
+            "BR",
+            "SC",
+            "BS",
+            "SD",
+            "BT",
+            "SE",
+            "BV",
+            "BW",
+            "SH",
+            "SI",
+            "BY",
+            "BZ",
+            "SK",
+            "SL",
+            "SM",
+            "SN",
+            "SO",
+            "CA",
+            "SR",
+            "SS",
+            "CD",
+            "ST",
+            "CF",
+            "SV",
+            "CG",
+            "CH",
+            "CI",
+            "SZ",
+            "CK",
+            "CL",
+            "CM",
+            "CO",
+            "CR",
+            "TC",
+            "TD",
+            "TF",
+            "CV",
+            "TG",
+            "CW",
+            "TH",
+            "CY",
+            "TJ",
+            "CZ",
+            "TK",
+            "TL",
+            "TM",
+            "TN",
+            "TO",
+            "TT",
+            "DE",
+            "TV",
+            "DJ",
+            "TZ",
+            "DK",
+            "DM",
+            "DO",
+            "UA",
+            "UG",
+            "DZ",
+            "UM",
+            "EC",
+            "US",
+            "EE",
+            "EG",
+            "EH",
+            "UY",
+            "UZ",
+            "VA",
+            "ER",
+            "VC",
+            "ES",
+            "ET",
+            "VE",
+            "VG",
+            "VI",
+            "VU",
+            "FI",
+            "FJ",
+            "FK",
+            "FM",
+            "FO",
+            "FR",
+            "WF",
+            "GA",
+            "GB",
+            "WS",
+            "GD",
+            "GE",
+            "GF",
+            "GH",
+            "GI",
+            "GL",
+            "GM",
+            "GN",
+            "GP",
+            "GQ",
+            "GR",
+            "GS",
+            "GT",
+            "GU",
+            "GW",
+            "GY",
+            "XK",
+            "HM",
+            "HN",
+            "HR",
+            "HT",
+            "YE",
+            "HU",
+            "ID",
+            "YT",
+            "IE",
+            "IL",
+            "IO",
+            "ZA",
+            "IQ",
+            "IS",
+            "IT",
+            "ZM",
+            "ZW",
+            "JM",
+            "JO",
+            "JP",
+            "KE",
+            "KG",
+            "KH",
+            "KI",
+            "KM",
+            "KN",
+            "KW",
+            "KY",
+            "KZ",
+            "LA",
+            "LB",
+            "LC",
+            "LI",
+            "LK",
+            "LR",
+            "LS",
+            "LT",
+            "LU",
+            "LV",
+            "LY",
+            "MA",
+            "MC",
+            "MD",
+            "ME",
+            "MG",
+            "MH",
+            "MK",
+            "ML",
+            "MM",
+            "MN",
+            "MO",
+            "MP",
+            "MQ",
+            "MR",
+            "MS",
+            "MT",
+            "MU",
+            "MV",
+            "MW",
+            "MX",
+            "MY",
+            "MZ",
+            "NA",
+            "NC",
+            "NE",
+            "NF",
+            "NG",
+            "NI",
+            "NL",
+            "NO",
+            "NP",
+            "NR",
+            "NU",
+            "NZ",
+            "OM",
+            "PA",
+            "PE",
+            "PF",
+            "PG",
+            "PH",
+            "PK",
+            "PL",
+            "PM",
+            "PN"
+        ],
+        "locales": [
+            "en-US"
+        ],
+        "maxReviewTime": "2_DAY",
+        "estimatedReviewTime": "A_HALF_HOUR",
+        "marketConsent": {
+            "enabled": false,
+            "required": false,
+            "message": "Yes, send me {company} marketing communications about exclusive sales, special offers, latest products and more"
+        },
+        "customMetadata": {
+            "enabled": true,
+            "keys": [
+                "utm_campaign",
+                "utm_content",
+                "utm_medium",
+                "utm_source",
+                "utm_term",
+                "userId"
+            ],
+            "requiredKeys": [
+                "userId"
+            ]
+        },
+        "customFaqLink": null,
+        "orgRemoteSource": null,
+        "orgSearchUrl": "https://orgsearch.sheerid.net/rest/organization/search?tags=HEI%2Cqualifying_ps%2CTITLE4&country=PR%2CPS%2CPT%2CPW%2CPY%2CQA%2CAD%2CAE%2CAF%2CAG%2CAI%2CAL%2CAM%2CAN%2CAO%2CAR%2CAS%2CAT%2CRE%2CAU%2CAW%2CAZ%2CRO%2CBA%2CBB%2CRS%2CBD%2CBE%2CBF%2CBG%2CRW%2CBH%2CBI%2CBJ%2CBM%2CBN%2CBO%2CSA%2CSB%2CBR%2CSC%2CBS%2CSD%2CBT%2CSE%2CBV%2CBW%2CSH%2CSI%2CBY%2CBZ%2CSK%2CSL%2CSM%2CSN%2CSO%2CCA%2CSR%2CSS%2CCD%2CST%2CCF%2CSV%2CCG%2CCH%2CCI%2CSZ%2CCK%2CCL%2CCM%2CCO%2CCR%2CTC%2CTD%2CTF%2CCV%2CTG%2CCW%2CTH%2CCY%2CTJ%2CCZ%2CTK%2CTL%2CTM%2CTN%2CTO%2CTT%2CDE%2CTV%2CDJ%2CTZ%2CDK%2CDM%2CDO%2CUA%2CUG%2CDZ%2CUM%2CEC%2CUS%2CEE%2CEG%2CEH%2CUY%2CUZ%2CVA%2CER%2CVC%2CES%2CET%2CVE%2CVG%2CVI%2CVU%2CFI%2CFJ%2CFK%2CFM%2CFO%2CFR%2CWF%2CGA%2CGB%2CWS%2CGD%2CGE%2CGF%2CGH%2CGI%2CGL%2CGM%2CGN%2CGP%2CGQ%2CGR%2CGS%2CGT%2CGU%2CGW%2CGY%2CXK%2CHM%2CHN%2CHR%2CHT%2CYE%2CHU%2CID%2CYT%2CIE%2CIL%2CIO%2CZA%2CIQ%2CIS%2CIT%2CZM%2CZW%2CJM%2CJO%2CJP%2CKE%2CKG%2CKH%2CKI%2CKM%2CKN%2CKW%2CKY%2CKZ%2CLA%2CLB%2CLC%2CLI%2CLK%2CLR%2CLS%2CLT%2CLU%2CLV%2CLY%2CMA%2CMC%2CMD%2CME%2CMG%2CMH%2CMK%2CML%2CMM%2CMN%2CMO%2CMP%2CMQ%2CMR%2CMS%2CMT%2CMU%2CMV%2CMW%2CMX%2CMY%2CMZ%2CNA%2CNC%2CNE%2CNF%2CNG%2CNI%2CNL%2CNO%2CNP%2CNR%2CNU%2CNZ%2COM%2CPA%2CPE%2CPF%2CPG%2CPH%2CPK%2CPL%2CPM%2CPN&type=UNIVERSITY%2CPOST_SECONDARY&accountId=68104494729fba7beccd33dc&name=",
+        "orgTypes": [
+            "UNIVERSITY",
+            "POST_SECONDARY"
+        ],
+        "orgSearchCountryTags": {
+            "PR": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "PS": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "PT": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "PW": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "PY": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "QA": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AD": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AE": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AF": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AG": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AI": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AL": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AN": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AO": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AR": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AS": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AT": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "RE": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AU": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AW": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "AZ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "RO": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BA": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BB": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "RS": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BD": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BE": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BF": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BG": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "RW": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BH": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BI": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BJ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BN": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BO": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SA": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SB": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BR": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SC": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BS": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SD": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BT": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SE": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BV": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BW": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SH": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SI": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BY": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "BZ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SK": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SL": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SN": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SO": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CA": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SR": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SS": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CD": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "ST": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CF": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SV": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CG": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CH": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CI": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "SZ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CK": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CL": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CO": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CR": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TC": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TD": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TF": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CV": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TG": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CW": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TH": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CY": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TJ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "CZ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TK": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TL": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TN": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TO": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TT": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "DE": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TV": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "DJ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "TZ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "DK": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "DM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "DO": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "UA": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "UG": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "DZ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "UM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "EC": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "US": [
+                "TITLE4",
+                "qualifying_ps"
+            ],
+            "EE": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "EG": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "EH": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "UY": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "UZ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "VA": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "ER": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "VC": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "ES": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "ET": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "VE": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "VG": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "VI": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "VU": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "FI": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "FJ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "FK": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "FM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "FO": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "FR": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "WF": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GA": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GB": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "WS": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GD": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GE": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GF": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GH": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GI": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GL": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GN": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GP": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GQ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GR": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GS": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GT": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GU": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GW": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "GY": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "XK": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "HM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "HN": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "HR": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "HT": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "YE": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "HU": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "ID": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "YT": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "IE": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "IL": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "IO": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "ZA": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "IQ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "IS": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "IT": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "ZM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "ZW": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "JM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "JO": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "JP": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "KE": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "KG": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "KH": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "KI": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "KM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "KN": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "KW": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "KY": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "KZ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "LA": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "LB": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "LC": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "LI": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "LK": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "LR": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "LS": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "LT": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "LU": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "LV": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "LY": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MA": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MC": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MD": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "ME": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MG": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MH": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MK": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "ML": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MN": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MO": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MP": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MQ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MR": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MS": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MT": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MU": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MV": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MW": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MX": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MY": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "MZ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "NA": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "NC": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "NE": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "NF": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "NG": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "NI": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "NL": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "NO": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "NP": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "NR": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "NU": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "NZ": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "OM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "PA": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "PE": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "PF": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "PG": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "PH": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "PK": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "PL": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "PM": [
+                "HEI",
+                "qualifying_ps"
+            ],
+            "PN": [
+                "HEI",
+                "qualifying_ps"
+            ]
+        },
+        "orgSearchAffiliationOverrides": {},
+        "rewardDisplay": [],
+        "excludedOrganizationIds": [],
+        "brandInfo": {
+            "faqUrl": "https://anysphere.co",
+            "emailAddress": null,
+            "phoneNumber": null
+        },
+        "segment": "student",
+        "offerType": "noCode",
+        "maxAge": null,
+        "minAge": null,
+        "onfidoReportNames": [
+            "document",
+            "facial_similarity_motion"
+        ],
+        "onfidoIncludedCountries": [
+            "ABW",
+            "AFG",
+            "AGO",
+            "AIA",
+            "ALB",
+            "AND",
+            "ARE",
+            "ARG",
+            "ARM",
+            "ASM",
+            "ATF",
+            "ATG",
+            "AUS",
+            "AUT",
+            "AZE",
+            "BDI",
+            "BEL",
+            "BEN",
+            "BFA",
+            "BGD",
+            "BGR",
+            "BHR",
+            "BHS",
+            "BIH",
+            "BLR",
+            "BLZ",
+            "BMU",
+            "BOL",
+            "BRA",
+            "BRB",
+            "BRN",
+            "BTN",
+            "BVT",
+            "BWA",
+            "CAF",
+            "CAN",
+            "CHE",
+            "CHL",
+            "CHN",
+            "CIV",
+            "CMR",
+            "COD",
+            "COG",
+            "COK",
+            "COL",
+            "COM",
+            "CRI",
+            "CUB",
+            "CUW",
+            "CYM",
+            "CYP",
+            "CZE",
+            "DEU",
+            "DJI",
+            "DMA",
+            "DNK",
+            "DOM",
+            "DZA",
+            "ECU",
+            "EGY",
+            "ERI",
+            "ESH",
+            "ESP",
+            "EST",
+            "ETH",
+            "FIN",
+            "FJI",
+            "FLK",
+            "FRA",
+            "FRO",
+            "FSM",
+            "GAB",
+            "GBR",
+            "GEO",
+            "GHA",
+            "GIB",
+            "GIN",
+            "GLP",
+            "GMB",
+            "GNB",
+            "GNQ",
+            "GRC",
+            "GRD",
+            "GRL",
+            "GTM",
+            "GUF",
+            "GUM",
+            "GUY",
+            "HKG",
+            "HMD",
+            "HND",
+            "HRV",
+            "HTI",
+            "HUN",
+            "IDN",
+            "IND",
+            "IOT",
+            "IRL",
+            "IRN",
+            "IRQ",
+            "ISL",
+            "ISR",
+            "ITA",
+            "JAM",
+            "JOR",
+            "JPN",
+            "KAZ",
+            "KEN",
+            "KGZ",
+            "KHM",
+            "KIR",
+            "KNA",
+            "KOR",
+            "KWT",
+            "LBN",
+            "LBR",
+            "LBY",
+            "LCA",
+            "LIE",
+            "LKA",
+            "LSO",
+            "LTU",
+            "LUX",
+            "LVA",
+            "MAR",
+            "MCO",
+            "MDA",
+            "MDG",
+            "MDV",
+            "MEX",
+            "MHL",
+            "MKD",
+            "MLI",
+            "MLT",
+            "MMR",
+            "MNE",
+            "MNG",
+            "MNP",
+            "MOZ",
+            "MRT",
+            "MSR",
+            "MTQ",
+            "MUS",
+            "MWI",
+            "MYS",
+            "MYT",
+            "NAM",
+            "NCL",
+            "NER",
+            "NFK",
+            "NGA",
+            "NIC",
+            "NIU",
+            "NLD",
+            "NOR",
+            "NPL",
+            "NRU",
+            "NZL",
+            "OMN",
+            "PAK",
+            "PAN",
+            "PCN",
+            "PER",
+            "PHL",
+            "PLW",
+            "PNG",
+            "POL",
+            "PRI",
+            "PRT",
+            "PRY",
+            "PSE",
+            "PYF",
+            "QAT",
+            "REU",
+            "ROU",
+            "RUS",
+            "RWA",
+            "SAU",
+            "SDN",
+            "SEN",
+            "SGP",
+            "SGS",
+            "SHN",
+            "SLB",
+            "SLE",
+            "SLV",
+            "SMR",
+            "SOM",
+            "SPM",
+            "SRB",
+            "SSD",
+            "STP",
+            "SUR",
+            "SVK",
+            "SVN",
+            "SWE",
+            "SYC",
+            "SYR",
+            "TCA",
+            "TCD",
+            "TGO",
+            "THA",
+            "TJK",
+            "TKL",
+            "TKM",
+            "TLS",
+            "TON",
+            "TTO",
+            "TUN",
+            "TUR",
+            "TUV",
+            "TWN",
+            "TZA",
+            "UGA",
+            "UKR",
+            "UMI",
+            "URY",
+            "USA",
+            "UZB",
+            "VCT",
+            "VEN",
+            "VGB",
+            "VIR",
+            "VNM",
+            "VUT",
+            "WLF",
+            "WSM",
+            "YEM",
+            "ZAF",
+            "ZMB",
+            "ZWE"
+        ],
+        "customProgramData": null
+    },
+    "strictMilitaryValidationEnabled": false,
+    "affinityProgramEnabled": false,
+    "isTestMode": false,
+    "smsLoopEnabled": false
+}

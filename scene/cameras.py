@@ -12,11 +12,10 @@
 import torch
 from torch import nn
 import numpy as np
-from utils.graphics_utils import getWorld2View2, getProjectionMatrix, fov2focal, getProjectionMatrixCenterShift
+from utils.graphics_utils import getWorld2View2, getProjectionMatrix, fov2focal, focal2fov
 import copy
 from PIL import Image
-from utils.general_utils import PILtoTorch
-import os, cv2
+from utils.general_utils import PILtoTorch, NumpyToTorch
 import torch.nn.functional as F
 
 def dilate(bin_img, ksize=6):
@@ -29,12 +28,25 @@ def erode(bin_img, ksize=12):
     out = 1 - dilate(1 - bin_img, ksize)
     return out
 
-def process_image(image_path, resolution, ncc_scale):
-    image = Image.open(image_path)
+def process_image(image_path, resolution, ncc_scale, image_PIL=None, delight=None, normal=None, transparencies_map=None):
+    if image_PIL is None:
+        image = Image.open(image_path)
+    else:
+        image = image_PIL
+    
+    resized_delight = None
+    resized_normal = None
+    resized_transparencies_map = None
     if len(image.split()) > 3:
         resized_image_rgb = torch.cat([PILtoTorch(im, resolution) for im in image.split()[:3]], dim=0)
         loaded_mask = PILtoTorch(image.split()[3], resolution)
         gt_image = resized_image_rgb
+        if delight is not None:
+            resized_delight = NumpyToTorch(delight, resolution)
+        if normal is not None:
+            resized_normal = NumpyToTorch(normal, resolution)
+        if transparencies_map is not None:
+            resized_transparencies_map = NumpyToTorch(transparencies_map, resolution)
         if ncc_scale != 1.0:
             ncc_resolution = (int(resolution[0]/ncc_scale), int(resolution[1]/ncc_scale))
             resized_image_rgb = torch.cat([PILtoTorch(im, ncc_resolution) for im in image.split()[:3]], dim=0)
@@ -42,19 +54,30 @@ def process_image(image_path, resolution, ncc_scale):
         resized_image_rgb = PILtoTorch(image, resolution)
         loaded_mask = None
         gt_image = resized_image_rgb
+        if delight is not None:
+            resized_delight = NumpyToTorch(delight, resolution)
+        if normal is not None:
+            resized_normal = NumpyToTorch(normal, resolution)
+        if transparencies_map is not None:
+            resized_transparencies_map = NumpyToTorch(transparencies_map, resolution)
         if ncc_scale != 1.0:
             ncc_resolution = (int(resolution[0]/ncc_scale), int(resolution[1]/ncc_scale))
             resized_image_rgb = PILtoTorch(image, ncc_resolution)
+            # if delight is not None:
+            #     resized_delight = NumpyToTorch(delight, ncc_resolution)
+            # if normal is not None:
+            #     resized_normal = NumpyToTorch(normal, ncc_resolution)
     gray_image = (0.299 * resized_image_rgb[0] + 0.587 * resized_image_rgb[1] + 0.114 * resized_image_rgb[2])[None]
-    return gt_image, gray_image, loaded_mask
+    return gt_image, gray_image, loaded_mask, resized_delight, resized_normal, resized_transparencies_map
 
 class Camera(nn.Module):
     def __init__(self, colmap_id, R, T, FoVx, FoVy,
                  image_width, image_height,
-                 image_path, image_name, uid,
+                 image_path, image_PIL, image_name, uid,
                  trans=np.array([0.0, 0.0, 0.0]), scale=1.0, 
                  ncc_scale=1.0,
-                 preload_img=True, data_device = "cuda"
+                 preload_img=True, data_device = "cuda",
+                 delight=None, normal=None, transparencies_map=None
                  ):
         super(Camera, self).__init__()
         self.uid = uid
@@ -67,6 +90,10 @@ class Camera(nn.Module):
         self.FoVy = FoVy
         self.image_name = image_name
         self.image_path = image_path
+        self.image_PIL = image_PIL
+        self.delight = delight
+        self.normal = normal
+        self.transparencies_map = transparencies_map
         self.image_width = image_width
         self.image_height = image_height
         self.resolution = (image_width, image_height)
@@ -85,12 +112,13 @@ class Camera(nn.Module):
         self.preload_img = preload_img
         self.ncc_scale = ncc_scale
         if self.preload_img:
-            gt_image, gray_image, loaded_mask = process_image(self.image_path, self.resolution, ncc_scale)
+            gt_image, gray_image, loaded_mask, resized_delight, resized_normal, resized_transparencies_map = process_image(self.image_path, self.resolution, ncc_scale, self.image_PIL, self.delight, self.normal, self.transparencies_map)
             self.original_image = gt_image.to(self.data_device)
             self.original_image_gray = gray_image.to(self.data_device)
             self.mask = loaded_mask
-
-
+            self.delight = resized_delight.to(self.data_device) if resized_delight is not None else None
+            self.normal = resized_normal.to(self.data_device) if resized_normal is not None else None
+            self.transparencies_map = resized_transparencies_map.to(self.data_device) if resized_transparencies_map is not None else None
         self.zfar = 100.0
         self.znear = 0.01
 
@@ -104,11 +132,12 @@ class Camera(nn.Module):
         self.plane_mask, self.non_plane_mask = None, None
 
     def get_image(self):
+        # print(self.preload_img)
         if self.preload_img:
-            return self.original_image.cuda(), self.original_image_gray.cuda()
+            return self.original_image, self.original_image_gray, self.delight if self.delight is not None else None, self.normal if self.normal is not None else None, self.transparencies_map if self.transparencies_map is not None else None
         else:
-            gt_image, gray_image, _ = process_image(self.image_path, self.resolution, self.ncc_scale)
-            return gt_image.cuda(), gray_image.cuda()
+            gt_image, gray_image, _, resized_delight, resized_normal = process_image(self.image_path, self.resolution, self.ncc_scale, self.image_PIL, self.delight, self.normal)
+            return gt_image.cuda(), gray_image.cuda(), resized_delight.cuda() if resized_delight is not None else None, resized_normal.cuda() if resized_normal is not None else None
 
     def get_calib_matrix_nerf(self, scale=1.0):
         intrinsic_matrix = torch.tensor([[self.Fx/scale, 0, self.Cx/scale], [0, self.Fy/scale, self.Cy/scale], [0, 0, 1]]).float()
@@ -137,6 +166,120 @@ class Camera(nn.Module):
                             [0, 0, 1]]).cuda()
         return K_T
 
+class NonCenteredCamera(nn.Module):
+    """
+    This class is used to represent a camera that is not centered. Others are the same as Camera class.
+    which means K (3x3) = [fx, 0, cx, 0, fy, cy, 0, 0, 1], where cx, cy is not W / 2, H / 2.
+    """
+    def __init__(self, colmap_id, R, T, K,
+                 image_width, image_height,
+                 image_path, image_PIL, image_name, uid,
+                 trans=np.array([0.0, 0.0, 0.0]), scale=1.0, 
+                 ncc_scale=1.0,
+                 preload_img=True, data_device = "cuda",
+                 delight=None, normal=None, transparencies_map=None
+                 ):
+        super(NonCenteredCamera, self).__init__()
+        self.uid = uid
+        self.nearest_id = []
+        self.nearest_names = []
+        self.colmap_id = colmap_id
+        self.R = R
+        self.T = T
+        fx, fy, cx, cy = K[0, 0], K[1, 1], K[0, 2], K[1, 2]
+        self.Fx = fx.astype(np.float32)
+        self.Fy = fy.astype(np.float32)
+        self.Cx = cx.astype(np.float32)
+        self.Cy = cy.astype(np.float32)
+        
+        
+        self.image_name = image_name
+        self.image_path = image_path
+        self.image_PIL = image_PIL
+        self.delight = delight
+        self.normal = normal
+        self.transparencies_map = transparencies_map
+        self.image_width = image_width
+        self.image_height = image_height
+        self.resolution = (image_width, image_height)
+        self.FoVx = focal2fov(self.Fx, self.image_width)
+        self.FoVy = focal2fov(self.Fy, self.image_height)
+        try:
+            self.data_device = torch.device(data_device)
+        except Exception as e:
+            print(e)
+            print(f"[Warning] Custom device {data_device} failed, fallback to default cuda device" )
+            self.data_device = torch.device("cuda")
+
+        self.original_image, self.image_gray, self.mask = None, None, None
+        self.preload_img = preload_img
+        self.ncc_scale = ncc_scale
+        if self.preload_img:
+            gt_image, gray_image, loaded_mask, resized_delight, resized_normal, resized_transparencies_map = process_image(self.image_path, self.resolution, ncc_scale, self.image_PIL, self.delight, self.normal, self.transparencies_map)
+            self.original_image = gt_image.to(self.data_device)
+            self.original_image_gray = gray_image.to(self.data_device)
+            self.mask = loaded_mask
+            self.delight = resized_delight.to(self.data_device) if resized_delight is not None else None
+            self.normal = resized_normal.to(self.data_device) if resized_normal is not None else None
+            self.transparencies_map = resized_transparencies_map.to(self.data_device) if resized_transparencies_map is not None else None
+        self.zfar = 100.0
+        self.znear = 0.01
+
+        self.trans = trans
+        self.scale = scale
+
+        w2c = np.eye(4)
+        w2c[:3, :3] = R.transpose()
+        w2c[:3, 3] = T
+        w2c = torch.tensor(w2c).cuda().float()
+        h, w = self.image_height, self.image_width
+        near, far = self.znear, self.zfar
+        opengl_proj = torch.tensor([[2 * fx / w, 0.0, -(w - 2 * cx) / w, 0.0],
+                                    [0.0, 2 * fy / h, -(h - 2 * cy) / h, 0.0],
+                                    [0.0, 0.0, far / (far - near), -(far * near) / (far - near)],
+                                    [0.0, 0.0, 1.0, 0.0]]).cuda().float()
+
+        # Note: transpose to column major for cuda part
+        self.world_view_transform = w2c.transpose(0, 1).float()
+        self.projection_matrix = opengl_proj.transpose(0, 1).float()
+        self.full_proj_transform = self.world_view_transform.matmul(self.projection_matrix).float()
+        self.camera_center = self.world_view_transform.inverse()[3, :3].float()
+        
+        self.plane_mask, self.non_plane_mask = None, None
+
+    def get_image(self):
+        if self.preload_img:
+            return self.original_image, self.original_image_gray, self.delight if self.delight is not None else None, self.normal if self.normal is not None else None, self.transparencies_map if self.transparencies_map is not None else None
+        else:
+            gt_image, gray_image, _, resized_delight, resized_normal = process_image(self.image_path, self.resolution, self.ncc_scale, self.image_PIL, self.delight, self.normal)
+            return gt_image.cuda(), gray_image.cuda(), resized_delight.cuda() if resized_delight is not None else None, resized_normal.cuda() if resized_normal is not None else None
+
+    def get_calib_matrix_nerf(self, scale=1.0):
+        intrinsic_matrix = torch.tensor([[self.Fx/scale, 0, self.Cx/scale], [0, self.Fy/scale, self.Cy/scale], [0, 0, 1]]).float()
+        extrinsic_matrix = self.world_view_transform.transpose(0,1).contiguous() # cam2world
+        return intrinsic_matrix, extrinsic_matrix
+    
+    def get_rays(self, scale=1.0):
+        W, H = int(self.image_width/scale), int(self.image_height/scale)
+        ix, iy = torch.meshgrid(
+            torch.arange(W), torch.arange(H), indexing='xy')
+        rays_d = torch.stack(
+                    [(ix-self.Cx/scale) / self.Fx * scale,
+                    (iy-self.Cy/scale) / self.Fy * scale,
+                    torch.ones_like(ix)], -1).float().cuda()
+        return rays_d
+    
+    def get_k(self, scale=1.0):
+        K = torch.tensor([[self.Fx / scale, 0, self.Cx / scale],
+                        [0, self.Fy / scale, self.Cy / scale],
+                        [0, 0, 1]]).cuda()
+        return K.float()
+    
+    def get_inv_k(self, scale=1.0):
+        K_T = torch.tensor([[scale/self.Fx, 0, -self.Cx/self.Fx],
+                            [0, scale/self.Fy, -self.Cy/self.Fy],
+                            [0, 0, 1]]).cuda()
+        return K_T.float()
 class MiniCam:
     def __init__(self, width, height, fovy, fovx, znear, zfar, world_view_transform, full_proj_transform):
         self.image_width = width

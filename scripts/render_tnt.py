@@ -90,7 +90,7 @@ def render_set(model_path, name, iteration, views, scene, gaussians, pipeline, b
 
     depths_tsdf_fusion = []
     for idx, view in enumerate(tqdm(views, desc="Rendering progress")):
-        gt, _ = view.get_image()
+        gt, _, gt_delight, gt_normal = view.get_image()
         out = render(view, gaussians, pipeline, background, app_model=app_model)
         rendering = out["render"]
         _, H, W = rendering.shape
@@ -111,6 +111,10 @@ def render_set(model_path, name, iteration, views, scene, gaussians, pipeline, b
         if name == 'test':
             torchvision.utils.save_image(gt, os.path.join(gts_path, view.image_name + ".png"))
             torchvision.utils.save_image(rendering, os.path.join(render_path, view.image_name + ".png"))
+            if gt_delight is not None:
+                torchvision.utils.save_image(gt_delight, os.path.join(gts_path, view.image_name + "_delight.png"))
+            if gt_normal is not None:
+                torchvision.utils.save_image(gt_normal, os.path.join(gts_path, view.image_name + "_normal.png"))
         else:
             rendering_np = (rendering.permute(1,2,0).clamp(0,1)[:,:,[2,1,0]]*255).detach().cpu().numpy().astype(np.uint8)
             cv2.imwrite(os.path.join(render_path, view.image_name + ".jpg"), rendering_np)

@@ -47,6 +47,7 @@ class ParamGroup:
 class ModelParams(ParamGroup): 
     def __init__(self, parser, sentinel=False):
         self.sh_degree = 3
+        self.asg_degree = 24
         self._source_path = ""
         self._model_path = ""
         self._images = "images"
@@ -60,6 +61,17 @@ class ModelParams(ParamGroup):
         self.multi_view_max_angle = 30
         self.multi_view_min_dis = 0.01
         self.multi_view_max_dis = 1.5
+        self._delight = False
+        self._normal = False
+        self.mask_background = False
+        self.use_delighted_normal = False
+        self.use_transparencies_map = False
+        self.not_delight_only_transparent = False
+        # asg params
+        self.load2gpu_on_the_fly = False
+        self.is_real = False
+        self.is_indoor = False
+        self.add_val = False
         super().__init__(parser, "Loading Parameters", sentinel)
 
     def extract(self, args):
@@ -81,6 +93,7 @@ class OptimizationParams(ParamGroup):
         self.position_lr_final = 0.0000016
         self.position_lr_delay_mult = 0.01
         self.position_lr_max_steps = 30_000
+        self.specular_lr_max_steps = 30_000
         self.feature_lr = 0.0025
         self.opacity_lr = 0.05
         self.scaling_lr = 0.005
@@ -116,6 +129,29 @@ class OptimizationParams(ParamGroup):
         self.max_all_points = 6000_000
         self.exposure_compensation = False
         self.random_background = False
+
+        self.wo_depth_normal_detach = False
+        self.use_2dgsnormal_loss = False
+        self.use_asg = False
+        self.delight_iterations = 15000
+        self.sd_normal_until_iter = 30000 # 30000 for easy dataset, where normal is easy to predict, 15000 for hard dataset where loss might be not accurate
+        self.lambda_sd_normal = 0.1
+        self.normal_cos_threshold_iter = 3000
+        self.ncc_loss_from_iter = 7000
+        # freeze optimizer
+        self.nofix_position = False
+        self.nofix_opacity = False
+        self.nofix_param = False
+        self.nofix_scaling = False
+        self.nofix_rotation = False
+        
+        # clear optimizer momentum
+        self.clear_f_dc = False
+        self.clear_f_rest = False
+        self.clear_opacity = False
+        self.clear_scaling = False
+        self.clear_rotation = False
+        
         super().__init__(parser, "Optimization Parameters")
 
 def get_combined_args(parser : ArgumentParser):

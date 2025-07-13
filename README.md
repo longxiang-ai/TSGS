@@ -1,154 +1,142 @@
-# PGSR: Planar-based Gaussian Splatting for Efficient and High-Fidelity Surface Reconstruction
-Danpeng Chen, Hai Li, [Weicai Ye](https://ywcmaike.github.io/), Yifan Wang, Weijian Xie, Shangjin Zhai, Nan Wang, Haomin Liu, Hujun Bao, [Guofeng Zhang](http://www.cad.zju.edu.cn/home/gfzhang/)
-### [Project Page](https://zju3dv.github.io/pgsr/) | [arXiv](https://arxiv.org/abs/2406.06521)
-![Teaser image](assets/teaser.jpg)
+# TSGS: Improving Gaussian Splatting for Transparent Surface Reconstruction via Normal and De-lighting Priors
 
-We present a Planar-based Gaussian Splatting Reconstruction representation for efficient and high-fidelity surface reconstruction from multi-view RGB images without any geometric prior (depth or normal from pre-trained model).  
+[![arXiv](https://img.shields.io/badge/arXiv-2504.12799-b31b1b.svg)](https://arxiv.org/abs/2504.12799)
+[![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://longxiang-ai.github.io/TSGS/)
+[![GitHub](https://img.shields.io/badge/Code-Available-green)](https://github.com/longxiang-ai/TSGS)
+[![Data](https://img.shields.io/badge/Data-Available-green)](https://drive.google.com/file/d/1ATRQdFaxo2XfcBWkk-Etu5IC9CQxeoyU/view?usp=sharing)
 
-## Updates
-- [2024.07.18]: We fine-tuned the hyperparameters based on the original paper. The Chamfer Distance on the DTU dataset decreased to 0.47.
+Official code release for the paper: **TSGS: Improving Gaussian Splatting for Transparent Surface Reconstruction via Normal and De-lighting Priors**.
 
-The Chamfer Distance↓ on the DTU dataset
-|     | 24| 37| 40| 55| 63| 65| 69| 83| 97|105|106|110|114|118|122|Mean|Time|
-|-------|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-|PGSR(Paper)|0.34|0.58|0.29|0.29|0.78|0.58|0.54|1.01|0.73|0.51|0.49|0.69|0.31|0.37|0.38|0.53|0.6h|
-|PGSR(Code_V1.0)|0.33|0.51|0.29|0.28|0.75|0.53|0.46|0.92|0.62|0.48|0.45|0.55|0.29|0.33|0.31|0.47|0.5h|
-|PGSR(Remove ICP)|0.36|0.57|0.38|0.33|0.78|0.58|0.50|1.08|0.63|0.59|0.46|0.54|0.30|0.38|0.34|0.52|0.5h|
+[Mingwei Li<sup>1,2</sup>](https://github.com/longxiang-ai), [Pu Pang<sup>3,2</sup>](https://github.com/fankewen), [Hehe Fan<sup>1</sup>](https://hehefan.github.io/), [Hua Huang<sup>4</sup>](https://ai.bnu.edu.cn/xygk/szdw/zgj/194482e0996d4044806ac39019896e9c.htm), [Yi Yang<sup>1,&#9993;</sup>](https://scholar.google.com/citations?user=RMSuNFwAAAAJ&hl=en)
 
-The F1 Score↑ on the TnT dataset
-||PGSR(Paper)|PGSR(Code_V1.0)
-|-|-|-|
-|Barn|0.66|0.65
-|Caterpillar|0.41|0.44
-|Courthouse|0.21|0.20
-|Ignatius|0.80|0.81
-|Meetingroom|0.29|0.32
-|Truck|0.60|0.66
-|Mean|0.50|0.51
-|Time|1.2h|45m
+*<sup>1</sup>Zhejiang University, <sup>2</sup>Zhongguancun Academy, Beijing, <sup>3</sup>Xi'an Jiaotong University, <sup>4</sup>Beijing Normal University*
+
+## News
+
+* **[2025-07-13]**: 🎉 Our code and dataset are released!
+* **[2025-07-05]**: 🏆 Our paper has been accepted by ACM MM 2025!
+* **[2025-04-18]**: 🎉 Our arXiv paper is released! You can find it [here](https://arxiv.org/abs/2504.12799). Project page is also live!
+
+![Teaser Image](./sources/teaser.jpg)
+*We present TSGS, a framework for high-fidelity transparent surface reconstruction from multi-views. (a) We introduce TransLab, a novel dataset for evaluating transparent object reconstruction. (b) Comparative results on TransLab demonstrate the superior capability of TSGS.*
+
+## Method Overview
+
+![Pipeline Image](./sources/pipeline.jpg)
+*(a) The two-stage training process. Stage 1 optimizes 3D Gaussians using geometric priors and de-lighted inputs. Stage 2 refines appearance while fixing opacity. (b) Inference extracts the first-surface depth map for mesh reconstruction. (c) The first-surface depth extraction module uses a sliding window for robust depth calculation.*
 
 ## Installation
 
-The repository contains submodules, thus please check it out with 
-```shell
-# SSH
-git clone git@github.com:zju3dv/PGSR.git
-cd PGSR
+1. **Clone the repository and setup environment:**
 
-conda create -n pgsr python=3.8
-conda activate pgsr
+    ```bash
+    git clone https://github.com/longxiang-ai/TSGS.git
+    cd TSGS
+    conda create -n tsgs python=3.8 -y  # Tested with Python 3.8, other versions may also work
+    conda activate tsgs
+    ```
 
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 #replace your cuda version
-pip install -r requirements.txt
-pip install submodules/diff-plane-rasterization
-pip install submodules/simple-knn
+2. **Install dependencies:**
+    Install PyTorch matching your CUDA version (see [PyTorch website](https://pytorch.org/get-started/locally/) for the correct command). We have tested with Python 3.8 and CUDA 11.8, but other corresponding PyTorch-CUDA versions should also work. Example for CUDA 11.8:
+
+    ```bash
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+    # Install other requirements and submodules
+    pip install -r requirements.txt
+    pip install submodules/diff-first-surface-rasterization
+    pip install submodules/simple-knn
+    ```
+
+3. **Install StableNormal (for input preprocessing):**
+    If you need to generate normal and de-lighting maps as input priors, install the StableNormal repository:
+
+    ```bash
+    git clone https://github.com/Stable-X/StableNormal.git
+    cd StableNormal
+    pip install -r requirements.txt
+    python preprocess/process_normal.py --source_path /path/to/your/data # For our provided TransLab dataset, you can skip this step because the normal and de-lighting maps are already provided.
+    cd .. # Return to the TSGS directory
+    ```
+
+## Datasets
+
+### TransLab Dataset
+
+We introduce **TransLab**, a novel dataset specifically designed for evaluating transparent object reconstruction in laboratory settings. It features 8 diverse, high-resolution 360° scenes with challenging transparent glassware. Details of collecting the dataset can be found in [Translab](./translab/README.md). Our dataset is available at [here](https://drive.google.com/file/d/1ATRQdFaxo2XfcBWkk-Etu5IC9CQxeoyU/view?usp=sharing). Please put downloaded data in the `data` folder, and the structure should be like this:
+
+```bash
+data/
+├── translab/
+│   ├── scene_01/
+│   │   ├── images/ # original images RGB channel, mask as A channel
+│   │   ├── masks/ # Rendered by Blender
+│   │   ├── normals/ # obtained by StableNormal
+│   │   ├── delights/ # obtained by StableDelight
+│   │   ├── sparse/ # obtained by colmap
+│   │   ├── meshes/  # exported from blender, for mesh evaluation
+│   │   └── transparent_masks/ # rendered by Blender
+│   ├── scene_02/
+│   ├── ...
+│   └── scene_08/
+├── dtu_dataset/
 ```
 
-## Dataset Preprocess
-Please download the preprocessed DTU dataset from [2DGS](https://surfsplatting.github.io/), the Tanks and Temples dataset from [official webiste](https://www.tanksandtemples.org/download/), the Mip-NeRF 360 dataset from the [official webiste](https://jonbarron.info/mipnerf360/). You need to download the ground truth point clouds from the [DTU dataset](https://roboimagedata.compute.dtu.dk/?page_id=36). For the Tanks and Temples dataset, you need to download the reconstruction, alignment and cropfiles from the [official webiste](https://jonbarron.info/mipnerf360/). 
+### DTU Dataset
 
-The data folder should like this:
-```shell
-data
-├── dtu_dataset
-│   ├── dtu
-│   │   ├── scan24
-│   │   │   ├── images
-│   │   │   ├── mask
-│   │   │   ├── sparse
-│   │   │   ├── cameras_sphere.npz
-│   │   │   └── cameras.npz
-│   │   └── ...
-│   ├── dtu_eval
+We follow the same data preparation process as [PGSR](https://zju3dv.github.io/pgsr/) to prepare the DTU dataset.
+
+Put dtu data in the `data` folder, and the structure should be like this:
+
+```bash
+data/
+├── dtu_dataset/
+│   ├── dtu/
+│   │   ├── scan24/
+│   │   ├── ...
+│   ├── dtu_eval/
+│   │   ├── ObsMask/
 │   │   ├── Points
-│   │   │   └── stl
-│   │   └── ObsMask
-├── tnt_dataset
-│   ├── tnt
-│   │   ├── Ignatius
-│   │   │   ├── images_raw
-│   │   │   ├── Ignatius_COLMAP_SfM.log
-│   │   │   ├── Ignatius_trans.txt
-│   │   │   ├── Ignatius.json
-│   │   │   ├── Ignatius_mapping_reference.txt
-│   │   │   └── Ignatius.ply
-│   │   └── ...
-└── MipNeRF360
-    ├── bicycle
-    └── ...
 ```
 
-Then run the scripts to preprocess Tanks and Temples dataset:
-```shell
-# Install COLMAP
-Refer to https://colmap.github.io/install.html
+## Training & Evaluation
 
-# Tanks and Temples dataset
-python scripts/preprocess/convert_tnt.py --tnt_path your_tnt_path
+The following scripts will first train each scene in the dataset, and then evaluate the results.
+
+```bash
+sh run_translab.sh # run on TransLab dataset
+sh run_dtu.sh # run on DTU dataset
 ```
 
-## Training and Evaluation
-```shell
-# Fill in the relevant parameters in the script, then run it.
+## TODO
 
-# DTU dataset
-python scripts/run_dtu.py
-
-# Tanks and Temples dataset
-python scripts/run_tnt.py
-
-# Mip360 dataset
-python scripts/run_mip360.py
-```
-
-## Custom Dataset
-The data folder should like this:
-```shell
-data
-├── data_name1
-│   └── input
-│       ├── *.jpg/*.png
-│       └── ...
-├── data_name2
-└── ...
-```
-Then run the following script to preprocess the dataset and to train and test:
-```shell
-# Preprocess dataset
-python scripts/preprocess/convert.py --data_path your_data_path
-```
-
-#### Some Suggestions:
-- Adjust the threshold for selecting the nearest frame in ModelParams based on the dataset;
-- -r n: Downsample the images by a factor of n to accelerate the training speed;
-- --max_abs_split_points 0: For weakly textured scenes, to prevent overfitting in areas with weak textures, we recommend disabling this splitting strategy by setting it to 0;
-- --opacity_cull_threshold 0.05: To reduce the number of Gaussian point clouds in a simple way, you can set this threshold.
-```shell
-# Training
-python train.py -s data_path -m out_path --max_abs_split_points 0 --opacity_cull_threshold 0.05
-```
-
-#### Some Suggestions:
-- Adjust max_depth and voxel_size based on the dataset;
-- --use_depth_filter: Enable depth filtering to remove potentially inaccurate depth points using single-view and multi-view techniques. For scenes with floating points or insufficient viewpoints, it is recommended to turn this on.
-```shell
-# Rendering and Extract Mesh
-python render.py -m out_path --max_depth 10.0 --voxel_size 0.01
-```
+* [x] Release Arxiv paper link.
+* [x] Release source code.
+* [x] Release TransLab-Synthetic dataset and download link.
+* [ ] Release TransLab-Real dataset and download link.
+* [ ] Provide detailed installation and usage instructions.
 
 ## Acknowledgements
-This project is built upon [3DGS](https://github.com/graphdeco-inria/gaussian-splatting). Densify is based on [AbsGau](https://ty424.github.io/AbsGS.github.io/) and [GOF](https://github.com/autonomousvision/gaussian-opacity-fields?tab=readme-ov-file). DTU and Tanks and Temples dataset preprocess are based on [Neuralangelo scripts](https://github.com/NVlabs/neuralangelo/blob/main/DATA_PROCESSING.md). Evaluation scripts for DTU and Tanks and Temples dataset are based on [DTUeval-python](https://github.com/jzhangbs/DTUeval-python) and [TanksAndTemples](https://github.com/isl-org/TanksAndTemples/tree/master/python_toolbox/evaluation) respectively. We thank all the authors for their great work and repos. 
 
+We would like to thank the following open-source projects for their valuable contributions: [PGSR](https://zju3dv.github.io/pgsr/), [StableNormal](https://github.com/Stable-X/StableNormal), [2DGS](https://github.com/hbb1/2d-gaussian-splatting), and [GroundedSAM](https://github.com/IDEA-Research/Grounded-Segment-Anything).
+
+We also thank [Nerfies](https://github.com/nerfies/nerfies.github.io) for their amazing website template.
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=longxiang-ai/TSGS&type=Date)](https://www.star-history.com/#longxiang-ai/TSGS&Date)
 
 ## Citation
 
-If you find this code useful for your research, please use the following BibTeX entry.
+If you find our work useful, please consider citing:
 
 ```bibtex
-@article{chen2024pgsr,
-  title={PGSR: Planar-based Gaussian Splatting for Efficient and High-Fidelity Surface Reconstruction},
-  author={Chen, Danpeng and Li, Hai and Ye, Weicai and Wang, Yifan and Xie, Weijian and Zhai, Shangjin and Wang, Nan and Liu, Haomin and Bao, Hujun and Zhang, Guofeng},
-  journal={arXiv preprint arXiv:2406.06521},
-  year={2024}
+@misc{li2025tsgs,
+  title={TSGS: Improving Gaussian Splatting for Transparent Surface Reconstruction via Normal and De-lighting Priors}, 
+  author={Mingwei Li and Pu Pang and Hehe Fan and Hua Huang and Yi Yang},
+  year={2025},
+  eprint={2504.12799},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2504.12799}, 
 }
 ```
