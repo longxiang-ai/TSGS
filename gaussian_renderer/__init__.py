@@ -11,8 +11,8 @@
 
 import torch
 import math
-from diff_plane_rasterization import GaussianRasterizationSettings as PlaneGaussianRasterizationSettings
-from diff_plane_rasterization import GaussianRasterizer as PlaneGaussianRasterizer
+from diff_first_surface_rasterization import GaussianRasterizationSettings as FirstSurfaceGaussianRasterizationSettings
+from diff_first_surface_rasterization import GaussianRasterizer as FirstSurfaceGaussianRasterizer
 from scene.gaussian_model import GaussianModel
 from scene.app_model import AppModel
 from utils.sh_utils import eval_sh
@@ -108,7 +108,7 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
         colors_precomp = override_color
 
     return_dict = None
-    raster_settings = PlaneGaussianRasterizationSettings(
+    raster_settings = FirstSurfaceGaussianRasterizationSettings(
             image_height=int(viewpoint_camera.image_height),
             image_width=int(viewpoint_camera.image_width),
             tanfovx=tanfovx,
@@ -125,7 +125,7 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
             transparency_threshold=transparency_threshold
         )
 
-    rasterizer = PlaneGaussianRasterizer(raster_settings=raster_settings)
+    rasterizer = FirstSurfaceGaussianRasterizer(raster_settings=raster_settings)
 
     if not return_plane:
         rendered_image, radii, out_observe, _, _, _, _ = rasterizer(
@@ -276,7 +276,7 @@ def render_depth(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Te
         colors_precomp = override_color
 
     return_dict = None
-    raster_settings = PlaneGaussianRasterizationSettings(
+    raster_settings = FirstSurfaceGaussianRasterizationSettings(
             image_height=int(viewpoint_camera.image_height),
             image_width=int(viewpoint_camera.image_width),
             tanfovx=tanfovx,
@@ -296,7 +296,7 @@ def render_depth(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Te
             window_size=window_size
         )
 
-    rasterizer = PlaneGaussianRasterizer(raster_settings=raster_settings)
+    rasterizer = FirstSurfaceGaussianRasterizer(raster_settings=raster_settings)
 
     if not return_plane:
         rendered_image, radii, out_observe, _, _, _, _ = rasterizer.forward_depth(
