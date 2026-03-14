@@ -297,7 +297,9 @@ renderCUDA(
 	float* __restrict__ out_nearest_depth,
 	float* __restrict__ out_transparency,
 	const bool render_geo,
-	const float transparency_threshold)
+	const float transparency_threshold,
+	const float T_threshold,
+	const float observe_T_threshold)
 {
 	// Identify current tile and associated min/max pixel range.
 	auto block = cg::this_thread_block();
@@ -386,7 +388,7 @@ renderCUDA(
 				// printf("nearest_depth %lf\n", nearest_depth);
 			}
 			float test_T = T * (1 - alpha);
-			if (test_T < 0.0001f)
+			if (test_T < T_threshold)
 			{
 				done = true;
 				continue;
@@ -405,7 +407,7 @@ renderCUDA(
 				pix_transparency = transparencies[collected_id[j]];
 				transparency_contributor = contributor;
 			}
-			if (T > 0.5)
+			if (T > observe_T_threshold)
 			{
 				atomicAdd(&(out_observe[collected_id[j]]), 1);
 			}
@@ -467,7 +469,9 @@ void FORWARD::render(
 	float* out_nearest_depth,
 	float* out_transparency,
 	const bool render_geo,
-	const float transparency_threshold)
+	const float transparency_threshold,
+	const float T_threshold,
+	const float observe_T_threshold)
 {
 	renderCUDA<NUM_CHANNELS,NUM_ALL_MAP> << <grid, block >> > (
 		ranges,
@@ -492,7 +496,9 @@ void FORWARD::render(
 		out_nearest_depth,
 		out_transparency,
 		render_geo,
-		transparency_threshold);
+		transparency_threshold,
+		T_threshold,
+		observe_T_threshold);
 }
 
 void FORWARD::preprocess(int P, int D, int M,
@@ -567,7 +573,11 @@ renderDepthCUDA(
 	float* __restrict__ out_depth_with_transparency,
 	const float start_threshold,
 	const float end_threshold,
-	const float window_size)
+	const float window_size,
+	const float T_threshold,
+	const float observe_T_threshold,
+	const float bg_T_threshold,
+	const float trans_binary_threshold)
 {
 	// Identify current tile and associated min/max pixel range.
 	auto block = cg::this_thread_block();
@@ -597,11 +607,9 @@ renderDepthCUDA(
 	float T = 1.0f;
 	float depth_with_transparency = {0}; // 1e3 is a large number, only used for rendering geometry
 
-	// const float window_size = window_size;
 	DepthWeight depth_weights[MAX_DEPTH_NUM];
 	uint16_t depth_weight_idx = 0;
-	// float pix_transparency_threshold = {0.5};
-	bool trans_flag = (transparencies[pix_id] > 0.5);
+	bool trans_flag = (transparencies[pix_id] > trans_binary_threshold);
 	
 	// Iterate over batches until all done or range is complete
 	for (int i = 0; i < rounds; i++, toDo -= BLOCK_SIZE)
@@ -643,7 +651,7 @@ renderDepthCUDA(
 				continue;
 
 			float test_T = T * (1 - alpha);
-			if (test_T < 0.0001f)
+			if (test_T < T_threshold)
 			{
 				done = true;
 				continue;
@@ -651,7 +659,7 @@ renderDepthCUDA(
 
 			// Eq. (3) from 3D Gaussian splatting paper.
 			if (!trans_flag){
-				if (T > 0.5){
+				if (T > observe_T_threshold){
 					float local_depth = all_map[collected_id[j] * ALL_MAP + 4] / -(all_map[collected_id[j] * ALL_MAP + 0] * ray.x + all_map[collected_id[j] * ALL_MAP + 1] * ray.y + all_map[collected_id[j] * ALL_MAP + 2] + 1.0e-8);
 					depth_with_transparency = local_depth;
 				}
@@ -687,7 +695,7 @@ renderDepthCUDA(
 	// rendering data to the frame and auxiliary buffers.
 	if (inside)
 	{
-		if (T > 0.98f){
+		if (T > bg_T_threshold){
 			out_depth_with_transparency[pix_id] = 0;
 		}
 		else{
@@ -807,7 +815,11 @@ void FORWARD::renderDepth(
 	float* out_depth_with_transparency,
 	const float start_threshold,
 	const float end_threshold,
-	const float window_size)
+	const float window_size,
+	const float T_threshold,
+	const float observe_T_threshold,
+	const float bg_T_threshold,
+	const float trans_binary_threshold)
 {
 	renderDepthCUDA<NUM_CHANNELS,NUM_ALL_MAP> << <grid, block >> > (
 		ranges,
@@ -824,5 +836,9 @@ void FORWARD::renderDepth(
 		out_depth_with_transparency,
 		start_threshold,
 		end_threshold,
-		window_size);
+		window_size,
+		T_threshold,
+		observe_T_threshold,
+		bg_T_threshold,
+		trans_binary_threshold);
 }

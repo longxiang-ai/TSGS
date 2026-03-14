@@ -48,7 +48,6 @@ def setup_seed(seed):
      np.random.seed(seed)
      random.seed(seed)
      torch.backends.cudnn.deterministic = True
-setup_seed(22)
 
 def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoint_iterations, checkpoint, debug_from):
     first_iter = 0
@@ -172,6 +171,8 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
                             return_depth_normal=True,
                             wo_depth_normal_detach=opt.wo_depth_normal_detach,
                             mlp_color=mlp_color,
+                            T_threshold=opt.T_threshold,
+                            observe_T_threshold=opt.observe_T_threshold,
                             )
         image, viewspace_point_tensor, visibility_filter, radii = \
             render_pkg["render"], render_pkg["viewspace_points"], render_pkg["visibility_filter"], render_pkg["radii"]
@@ -676,7 +677,9 @@ if __name__ == "__main__":
     parser.add_argument("--quiet", action="store_true")
     parser.add_argument("--checkpoint_iterations", nargs="+", type=int, default=[])
     parser.add_argument("--start_checkpoint", type=str, default = None)
+    parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args(sys.argv[1:])
+    setup_seed(args.seed)
     args.save_iterations.append(args.iterations)
     
     print("Optimizing " + args.model_path)

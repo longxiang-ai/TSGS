@@ -134,8 +134,8 @@ class OptimizationParams(ParamGroup):
         self.use_2dgsnormal_loss = False
         self.use_asg = False
         self.delight_iterations = 15000
-        self.sd_normal_until_iter = 30000 # 30000 for easy dataset, where normal is easy to predict, 15000 for hard dataset where loss might be not accurate
-        self.lambda_sd_normal = 0.1
+        self.sd_normal_until_iter = 30000
+        self.lambda_sd_normal = 0.05
         self.normal_cos_threshold_iter = 3000
         self.ncc_loss_from_iter = 7000
         # freeze optimizer
@@ -151,6 +151,11 @@ class OptimizationParams(ParamGroup):
         self.clear_opacity = False
         self.clear_scaling = False
         self.clear_rotation = False
+
+        self.T_threshold = 0.0001
+        self.observe_T_threshold = 0.5
+        self.bg_T_threshold = 0.98
+        self.trans_binary_threshold = 0.5
         
         super().__init__(parser, "Optimization Parameters")
 

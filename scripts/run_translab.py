@@ -18,14 +18,14 @@ parser.add_argument("--is_real", action="store_true")
 parser.add_argument("--is_indoor", action="store_true")
 parser.add_argument("--load2gpu_on_the_fly", action="store_true")
 parser.add_argument("--asg_degree", type=int, default=24)
-parser.add_argument("--sd_normal_until_iter", type=int, default=15000)
+parser.add_argument("--sd_normal_until_iter", type=int, default=30000)
 parser.add_argument("--iterations", type=int, default=30000)
 parser.add_argument("--mask_background", action="store_true", default=True)
 parser.add_argument("--mesh_expname", type=str, default='mesh')
 parser.add_argument("--normal_cos_threshold_iter", type=int, default=3000)
 parser.add_argument("--eval", action="store_true")
 parser.add_argument("--delight_iterations", type=int, default=15000)
-parser.add_argument("--resolution", "-r", type=int, default=-1) # resolution downsample ratio
+parser.add_argument("--resolution", "-r", type=int, default=2)
 parser.add_argument("--render_iteration", type=int, default=-1)
 parser.add_argument("--num_cluster", type=int, default=5)
 parser.add_argument("--use_delighted_normal", action="store_true")
@@ -50,6 +50,7 @@ parser.add_argument("--clear_scaling", action="store_true")
 parser.add_argument("--clear_rotation", action="store_true")
 parser.add_argument("--train_label", type=str, default="train")
 parser.add_argument("--test_label", type=str, default="test")
+parser.add_argument("--seed", type=int, default=42)
 
 args = parser.parse_args()
 
@@ -106,7 +107,7 @@ for scene in scenes:
       common_args += " --nofix_scaling" if args.nofix_scaling else ""
       common_args += " --nofix_rotation" if args.nofix_rotation else ""
       common_args += " --not_delight_only_transparent" if args.not_delight_only_transparent else ""
-      
+      common_args += f" --seed {args.seed}"
       common_args += " --use_transparencies_map" if args.use_transparencies_map else ""
       common_args += " --clear_f_dc" if args.clear_f_dc else ""
       common_args += " --clear_f_rest" if args.clear_f_rest else ""

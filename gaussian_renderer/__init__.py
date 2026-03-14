@@ -41,7 +41,8 @@ def render_normal(viewpoint_cam, depth, offset=None, normal=None, scale=1):
     return normal_ref
 
 def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, scaling_modifier = 1.0, override_color = None, 
-           app_model: AppModel=None, return_plane = True, return_depth_normal = True, wo_depth_normal_detach = False, mlp_color = None, hybrid = True, transparency_threshold=0.15, start_threshold = 0.0, end_threshold = 0.2, window_size = 0.03):
+           app_model: AppModel=None, return_plane = True, return_depth_normal = True, wo_depth_normal_detach = False, mlp_color = None, hybrid = True, transparency_threshold=0.15, start_threshold = 0.0, end_threshold = 0.2, window_size = 0.03,
+           T_threshold=0.0001, observe_T_threshold=0.5, bg_T_threshold=0.98, trans_binary_threshold=0.5):
     """
     Render the scene. Background tensor (bg_color) must be on GPU!
     mlp_color: the view dependent color predicted by ASG MLP
@@ -122,7 +123,11 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
             prefiltered=False,
             render_geo=return_plane,
             debug=pipe.debug,
-            transparency_threshold=transparency_threshold
+            transparency_threshold=transparency_threshold,
+            T_threshold=T_threshold,
+            observe_T_threshold=observe_T_threshold,
+            bg_T_threshold=bg_T_threshold,
+            trans_binary_threshold=trans_binary_threshold
         )
 
     rasterizer = FirstSurfaceGaussianRasterizer(raster_settings=raster_settings)
@@ -211,7 +216,8 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
     return return_dict
 
 def render_depth(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, scaling_modifier = 1.0, override_color = None, 
-           app_model: AppModel=None, return_plane = True, return_depth_normal = True, wo_depth_normal_detach = False, mlp_color = None, hybrid = True, transparencies_map = None, transparency_threshold=0.15, start_threshold = 0.0, end_threshold = 0.2, window_size = 0.03):
+           app_model: AppModel=None, return_plane = True, return_depth_normal = True, wo_depth_normal_detach = False, mlp_color = None, hybrid = True, transparencies_map = None, transparency_threshold=0.15, start_threshold = 0.0, end_threshold = 0.2, window_size = 0.03,
+           T_threshold=0.0001, observe_T_threshold=0.5, bg_T_threshold=0.98, trans_binary_threshold=0.5):
     """
     Render the scene. Background tensor (bg_color) must be on GPU!
     Return only the depth map. No RGB or normal.
@@ -293,7 +299,11 @@ def render_depth(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Te
             transparency_threshold=transparency_threshold,
             start_threshold=start_threshold,
             end_threshold=end_threshold,
-            window_size=window_size
+            window_size=window_size,
+            T_threshold=T_threshold,
+            observe_T_threshold=observe_T_threshold,
+            bg_T_threshold=bg_T_threshold,
+            trans_binary_threshold=trans_binary_threshold
         )
 
     rasterizer = FirstSurfaceGaussianRasterizer(raster_settings=raster_settings)

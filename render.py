@@ -22,6 +22,8 @@ from utils.general_utils import safe_state
 from argparse import ArgumentParser
 from arguments import ModelParams, PipelineParams, get_combined_args
 from gaussian_renderer import GaussianModel
+from scene import SpecularModel
+from scene.app_model import AppModel
 import numpy as np
 import cv2
 import open3d as o3d
@@ -237,9 +239,11 @@ def render_sets(dataset : ModelParams, iteration : int, pipeline : PipelineParam
                  max_depth : float, voxel_size : float, num_cluster: int, use_depth_filter : bool, mesh_expname: str, 
                  window_size: float=0.03, transparency_threshold: float=0.15, start_threshold: float=0.0, 
                  end_threshold: float=0.2, use_transparent_depth: bool=False, skip_mesh: bool=False,
-                 train_label: str="train", test_label: str="test", replace_with_nearest_depth: bool=False, depth_transparency_blended: bool=False):
+                 train_label: str="train", test_label: str="test", replace_with_nearest_depth: bool=False, depth_transparency_blended: bool=False,
+                 use_asg: bool=False):
     with torch.no_grad():
-        gaussians = GaussianModel(dataset.sh_degree)
+        asg_degree = dataset.asg_degree if use_asg else None
+        gaussians = GaussianModel(dataset.sh_degree, asg_degree)
         scene = Scene(dataset, gaussians, load_iteration=iteration, shuffle=False)
 
         bg_color = [1,1,1] if dataset.white_background else [0, 0, 0]
@@ -249,10 +253,20 @@ def render_sets(dataset : ModelParams, iteration : int, pipeline : PipelineParam
             sdf_trunc=4.0*voxel_size,
             color_type=o3d.pipelines.integration.TSDFVolumeColorType.RGB8)
 
+        app_model = AppModel()
+        app_model.load_weights(dataset.model_path, iteration=scene.loaded_iter)
+        app_model.eval()
+        app_model.cuda()
+
+        specular_mlp = None
+        if use_asg:
+            specular_mlp = SpecularModel(dataset.is_real, dataset.is_indoor)
+            specular_mlp.load_weights(dataset.model_path, iteration=scene.loaded_iter)
+
         if not skip_train:
             print(f"processing train set, with {len(scene.getTrainCameras())} views")
             render_set(dataset.model_path, train_label, scene.loaded_iter, scene.getTrainCameras(), scene, gaussians, pipeline, background, 
-                       max_depth=max_depth, volume=volume, use_depth_filter=use_depth_filter, window_size=window_size, transparency_threshold=transparency_threshold, start_threshold=start_threshold, end_threshold=end_threshold, use_transparent_depth=use_transparent_depth, replace_with_nearest_depth=replace_with_nearest_depth, depth_transparency_blended=depth_transparency_blended)
+                       app_model=app_model, max_depth=max_depth, volume=volume, use_depth_filter=use_depth_filter, specular=specular_mlp, window_size=window_size, transparency_threshold=transparency_threshold, start_threshold=start_threshold, end_threshold=end_threshold, use_transparent_depth=use_transparent_depth, replace_with_nearest_depth=replace_with_nearest_depth, depth_transparency_blended=depth_transparency_blended)
             
             if not skip_mesh:
                 print(f"extract_triangle_mesh")
@@ -301,7 +315,7 @@ def render_sets(dataset : ModelParams, iteration : int, pipeline : PipelineParam
                 os.system(f"cp -f {os.path.join(path, f'tsdf_fusion_post_{iteration}.ply')} {os.path.join(path, f'tsdf_fusion_post.ply')}")
                 print("mesh saved at", os.path.join(path, f"tsdf_fusion_post_{iteration}.ply"))
         if not skip_test:
-            render_set(dataset.model_path, test_label, scene.loaded_iter, scene.getTestCameras(), scene, gaussians, pipeline, background, use_transparent_depth=use_transparent_depth, replace_with_nearest_depth=replace_with_nearest_depth)
+            render_set(dataset.model_path, test_label, scene.loaded_iter, scene.getTestCameras(), scene, gaussians, pipeline, background, app_model=app_model, specular=specular_mlp, use_transparent_depth=use_transparent_depth, replace_with_nearest_depth=replace_with_nearest_depth)
 
 if __name__ == "__main__":
     torch.set_num_threads(8)
@@ -314,17 +328,17 @@ if __name__ == "__main__":
     parser.add_argument("--skip_test", action="store_true")
     parser.add_argument("--skip_mesh", action="store_true")
     parser.add_argument("--quiet", action="store_true")
-    parser.add_argument("--max_depth", default=5.0, type=float)
+    parser.add_argument("--max_depth", default=10.0, type=float)
     parser.add_argument("--voxel_size", default=0.002, type=float)
-    parser.add_argument("--num_cluster", default=1, type=int)
+    parser.add_argument("--num_cluster", default=5, type=int)
     parser.add_argument("--use_depth_filter", action="store_true")
     parser.add_argument("--use_asg", default=False, action="store_true")
     parser.add_argument("--mesh_expname", type=str, default='mesh')
     parser.add_argument("--window_size", type=float, default=0.03)
     parser.add_argument("--transparency_threshold", type=float, default=0.15)
     parser.add_argument("--start_threshold", type=float, default=0.0)
-    parser.add_argument("--end_threshold", type=float, default=0.1)
-    parser.add_argument("--use_transparent_depth", type=bool, default=False)
+    parser.add_argument("--end_threshold", type=float, default=0.2)
+    parser.add_argument("--use_transparent_depth", type=bool, default=True)
     parser.add_argument("--train_label", type=str, default="train", help="存储训练集渲染结果的文件夹标签")
     parser.add_argument("--test_label", type=str, default="test", help="存储测试集渲染结果的文件夹标签")
     parser.add_argument("--replace_with_nearest_depth", type=bool, default=False)
@@ -338,4 +352,5 @@ if __name__ == "__main__":
     render_sets(model.extract(args), args.iteration, pipeline.extract(args), args.skip_train, args.skip_test, 
                 args.max_depth, args.voxel_size, args.num_cluster, args.use_depth_filter, args.mesh_expname, 
                 args.window_size, args.transparency_threshold, args.start_threshold, args.end_threshold, 
-                args.use_transparent_depth, args.skip_mesh, args.train_label, args.test_label, args.replace_with_nearest_depth, args.depth_transparency_blended)
+                args.use_transparent_depth, args.skip_mesh, args.train_label, args.test_label, args.replace_with_nearest_depth, args.depth_transparency_blended,
+                args.use_asg)

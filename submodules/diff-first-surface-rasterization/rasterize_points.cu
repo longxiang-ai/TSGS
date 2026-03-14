@@ -56,6 +56,8 @@ RasterizeGaussiansCUDA(
 	const bool prefiltered,
 	const bool render_geo,
 	const float transparency_threshold,
+	const float T_threshold,
+	const float observe_T_threshold,
 	const bool debug)
 {
   if (means3D.ndimension() != 2 || means3D.size(1) != 3) {
@@ -126,6 +128,8 @@ RasterizeGaussiansCUDA(
 		out_transparency.contiguous().data_ptr<float>(),
 		render_geo,
 		transparency_threshold,
+		T_threshold,
+		observe_T_threshold,
 		debug);
   }
   return std::make_tuple(rendered, out_color, radii, out_observe, out_all_map, out_plane_depth, out_nearest_depth, out_transparency, geomBuffer, binningBuffer, imgBuffer);
@@ -257,6 +261,10 @@ RasterizeGaussiansDepthCUDA(
 	const float start_threshold,
 	const float end_threshold,
 	const float window_size,
+	const float T_threshold,
+	const float observe_T_threshold,
+	const float bg_T_threshold,
+	const float trans_binary_threshold,
 	const bool debug)
 {
   if (means3D.ndimension() != 2 || means3D.size(1) != 3) {
@@ -317,6 +325,10 @@ RasterizeGaussiansDepthCUDA(
 		start_threshold,
 		end_threshold,
 		window_size,
+		T_threshold,
+		observe_T_threshold,
+		bg_T_threshold,
+		trans_binary_threshold,
 		debug);
   }
   return std::make_tuple(out_depth_with_transparency);

@@ -226,6 +226,8 @@ int CudaRasterizer::Rasterizer::forward(
 	float* out_transparency,
 	const bool render_geo,
 	const float transparency_threshold,
+	const float T_threshold,
+	const float observe_T_threshold,
 	bool debug)
 {
 	const float focal_y = height / (2.0f * tan_fovy);
@@ -352,7 +354,9 @@ int CudaRasterizer::Rasterizer::forward(
 		out_nearest_depth,
 		out_transparency,
 		render_geo,
-		transparency_threshold), debug)
+		transparency_threshold,
+		T_threshold,
+		observe_T_threshold), debug)
 
 	return num_rendered;
 }
@@ -383,6 +387,10 @@ int CudaRasterizer::Rasterizer::forwardDepth(
 	const float start_threshold,
 	const float end_threshold,
 	const float window_size,
+	const float T_threshold,
+	const float observe_T_threshold,
+	const float bg_T_threshold,
+	const float trans_binary_threshold,
 	bool debug)
 {
 	const float focal_y = height / (2.0f * tan_fovy);
@@ -500,7 +508,11 @@ int CudaRasterizer::Rasterizer::forwardDepth(
 		out_depth_with_transparency,
 		start_threshold,
 		end_threshold,
-		window_size), 
+		window_size,
+		T_threshold,
+		observe_T_threshold,
+		bg_T_threshold,
+		trans_binary_threshold), 
 		debug)
 
 	return num_rendered;

@@ -93,6 +93,8 @@ class _RasterizeGaussians(torch.autograd.Function):
             raster_settings.prefiltered,
             raster_settings.render_geo,
             raster_settings.transparency_threshold,
+            raster_settings.T_threshold,
+            raster_settings.observe_T_threshold,
             raster_settings.debug
         )
 
@@ -200,6 +202,10 @@ class GaussianRasterizationSettings(NamedTuple):
     start_threshold: float = 0.0
     end_threshold: float = 0.2
     window_size: float = 0.03
+    T_threshold: float = 0.0001
+    observe_T_threshold: float = 0.5
+    bg_T_threshold: float = 0.98
+    trans_binary_threshold: float = 0.5
 
 class GaussianRasterizer(nn.Module):
     def __init__(self, raster_settings):
@@ -303,6 +309,10 @@ class GaussianRasterizer(nn.Module):
             raster_settings.start_threshold,
             raster_settings.end_threshold,
             raster_settings.window_size,
+            raster_settings.T_threshold,
+            raster_settings.observe_T_threshold,
+            raster_settings.bg_T_threshold,
+            raster_settings.trans_binary_threshold,
             raster_settings.debug
         )
 

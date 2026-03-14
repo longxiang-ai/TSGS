@@ -72,7 +72,9 @@ namespace FORWARD
 		float* out_nearest_depth,
 		float* out_transparency,
 		const bool render_geo,
-		const float transparency_threshold);
+		const float transparency_threshold,
+		const float T_threshold = 0.0001f,
+		const float observe_T_threshold = 0.5f);
 	
 	void renderDepth(
 		const dim3 grid, dim3 block,
@@ -90,7 +92,11 @@ namespace FORWARD
 		float* out_depth_with_transparency,
 		const float start_threshold,
 		const float end_threshold,
-		const float window_size);
+		const float window_size,
+		const float T_threshold = 0.0001f,
+		const float observe_T_threshold = 0.5f,
+		const float bg_T_threshold = 0.98f,
+		const float trans_binary_threshold = 0.5f);
 }
 
 
