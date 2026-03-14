@@ -51,7 +51,7 @@ class ModelParams(ParamGroup):
         self._source_path = ""
         self._model_path = ""
         self._images = "images"
-        self._resolution = -1
+        self._resolution = 2
         self._white_background = False
         self.data_device = "cuda"
         self.eval = False
@@ -63,6 +63,7 @@ class ModelParams(ParamGroup):
         self.multi_view_max_dis = 1.5
         self._delight = False
         self._normal = False
+        self.normal_folder = "normals"
         self.mask_background = False
         self.use_delighted_normal = False
         self.use_transparencies_map = False

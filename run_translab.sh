@@ -1,1 +1,18 @@
-python scripts/run_translab.py --out_name final --delight --normal --use_asg --gpu_id 0  --mesh_expname train_start0.0_end0.1_window0.03 --normal_cos_threshold_iter 3000 --eval --delight_iterations 15000 --render_iteration 30000 --num_cluster 5 --sd_normal_until_iter 30000 --ncc_loss_from_iter 7000 --nofix_position --nofix_scaling --nofix_rotation --window_size 0.03 --start_threshold 0.0 --end_threshold 0.1
+python scripts/run_translab.py \
+    --out_name final \
+    --delight --normal --eval \
+    --use_asg --gpu_id 0 \
+    --resolution 2 \
+    --iterations 30000 \
+    --sd_normal_until_iter 30000 \
+    --delight_iterations 15000 \
+    --normal_cos_threshold_iter 3000 \
+    --ncc_loss_from_iter 7000 \
+    --nofix_position --nofix_scaling --nofix_rotation \
+    --seed 42 \
+    --render_iteration 30000 \
+    --num_cluster 5 \
+    --mesh_expname mesh \
+    --window_size 0.03 \
+    --start_threshold 0.0 \
+    --end_threshold 0.2

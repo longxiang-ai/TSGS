@@ -51,6 +51,7 @@ parser.add_argument("--clear_rotation", action="store_true")
 parser.add_argument("--train_label", type=str, default="train")
 parser.add_argument("--test_label", type=str, default="test")
 parser.add_argument("--seed", type=int, default=42)
+parser.add_argument("--normal_folder", type=str, default="normals")
 
 args = parser.parse_args()
 
@@ -108,6 +109,7 @@ for scene in scenes:
       common_args += " --nofix_rotation" if args.nofix_rotation else ""
       common_args += " --not_delight_only_transparent" if args.not_delight_only_transparent else ""
       common_args += f" --seed {args.seed}"
+      common_args += f" --normal_folder {args.normal_folder}"
       common_args += " --use_transparencies_map" if args.use_transparencies_map else ""
       common_args += " --clear_f_dc" if args.clear_f_dc else ""
       common_args += " --clear_f_rest" if args.clear_f_rest else ""

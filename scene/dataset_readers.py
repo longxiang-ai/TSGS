@@ -90,7 +90,7 @@ def load_poses(pose_path, num):
     poses = np.stack(poses, axis=0)
     return poses
 
-def readColmapCameras(cam_extrinsics, cam_intrinsics, images_folder, use_delight=False, use_normal=False, mask_background=True, use_delighted_normal=False, use_transparencies_map=True, not_delight_only_transparent=False):
+def readColmapCameras(cam_extrinsics, cam_intrinsics, images_folder, use_delight=False, use_normal=False, mask_background=True, use_delighted_normal=False, use_transparencies_map=True, not_delight_only_transparent=False, normal_folder="normals"):
     cam_infos = []
     for idx, key in tqdm.tqdm(enumerate(cam_extrinsics)):
         # if idx == 5:
@@ -160,7 +160,7 @@ def readColmapCameras(cam_extrinsics, cam_intrinsics, images_folder, use_delight
             delight_image = None
 
         if use_normal:
-            normal_path = image_path[:-4].replace("images", "normals"+str_nomask) + "_normal" + extension
+            normal_path = image_path[:-4].replace("images", normal_folder+str_nomask) + "_normal" + extension
             if use_delighted_normal:
                 normal_path = image_path[:-4].replace("images", "delighted_normals"+str_nomask) + "_delighted_normal" + extension
             normal_image = Image.open(normal_path)
@@ -263,7 +263,7 @@ def storePly(path, xyz, rgb, normals=None):
     ply_data = PlyData([vertex_element])
     ply_data.write(path)
 
-def readColmapSceneInfo(path, images, eval, llffhold=8, use_delight=False, use_normal=False, mask_background=True, use_delighted_normal=False, use_transparencies_map=True, not_delight_only_transparent=False):
+def readColmapSceneInfo(path, images, eval, llffhold=8, use_delight=False, use_normal=False, mask_background=True, use_delighted_normal=False, use_transparencies_map=True, not_delight_only_transparent=False, normal_folder="normals"):
     try:
         cameras_extrinsic_file = os.path.join(path, "sparse", "images.txt")
         cameras_intrinsic_file = os.path.join(path, "sparse", "cameras.txt")
@@ -275,8 +275,8 @@ def readColmapSceneInfo(path, images, eval, llffhold=8, use_delight=False, use_n
         cam_extrinsics = read_extrinsics_binary(cameras_extrinsic_file)
         cam_intrinsics = read_intrinsics_binary(cameras_intrinsic_file)
     reading_dir = "images" if images == None else images
-    print(f"Reading Colmap Scene Info, use_delight: {use_delight}, use_normal: {use_normal}")
-    cam_infos_unsorted = readColmapCameras(cam_extrinsics=cam_extrinsics, cam_intrinsics=cam_intrinsics, images_folder=os.path.join(path, reading_dir), use_delight=use_delight, use_normal=use_normal, mask_background=mask_background, use_delighted_normal=use_delighted_normal, use_transparencies_map=use_transparencies_map, not_delight_only_transparent=not_delight_only_transparent)
+    print(f"Reading Colmap Scene Info, use_delight: {use_delight}, use_normal: {use_normal}, normal_folder: {normal_folder}")
+    cam_infos_unsorted = readColmapCameras(cam_extrinsics=cam_extrinsics, cam_intrinsics=cam_intrinsics, images_folder=os.path.join(path, reading_dir), use_delight=use_delight, use_normal=use_normal, mask_background=mask_background, use_delighted_normal=use_delighted_normal, use_transparencies_map=use_transparencies_map, not_delight_only_transparent=not_delight_only_transparent, normal_folder=normal_folder)
     # cam_infos = sorted(cam_infos_unsorted.copy(), key = lambda x : int(x.image_name.split('_')[-1]))
     cam_infos = sorted(cam_infos_unsorted.copy(), key = lambda x : x.image_name)
     

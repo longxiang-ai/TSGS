@@ -44,7 +44,7 @@ class Scene:
         self.test_cameras = {}
 
         if os.path.exists(os.path.join(args.source_path, "sparse")):
-            scene_info = sceneLoadTypeCallbacks["Colmap"](args.source_path, args.images, args.eval, use_delight=args.delight, use_normal=args.normal, mask_background=args.mask_background, use_delighted_normal=args.use_delighted_normal, use_transparencies_map=args.use_transparencies_map, not_delight_only_transparent=args.not_delight_only_transparent)
+            scene_info = sceneLoadTypeCallbacks["Colmap"](args.source_path, args.images, args.eval, use_delight=args.delight, use_normal=args.normal, mask_background=args.mask_background, use_delighted_normal=args.use_delighted_normal, use_transparencies_map=args.use_transparencies_map, not_delight_only_transparent=args.not_delight_only_transparent, normal_folder=args.normal_folder)
         elif os.path.exists(os.path.join(args.source_path, "transforms_train.json")):
             if "relight_dataset" in args.source_path:
                 print("Found transforms_train.json file, assuming Synthetic4Relight data set!")
