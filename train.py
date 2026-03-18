@@ -305,7 +305,7 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
                     weights = torch.ones_like(pixel_noise)
                     weights[~d_mask] = 0
                 with torch.no_grad():
-                    if iteration % 200 == 0:
+                    if iteration % 100 == 0:
                         gt_img_show = ((gt_image).permute(1,2,0).clamp(0,1)[:,:,[2,1,0]]*255).detach().cpu().numpy().astype(np.uint8)
                         if 'app_image' in render_pkg:
                             img_show = ((render_pkg['app_image']).permute(1,2,0).clamp(0,1)[:,:,[2,1,0]]*255).detach().cpu().numpy().astype(np.uint8)
@@ -613,7 +613,7 @@ def training_report(tb_writer, iteration, Ll1, loss, l1_loss, elapsed, testing_i
 @torch.no_grad()
 def save_training_vis(viewpoint_cam, gaussians, background, render_fn, pipe, opt, first_iter, iteration, pbr_kwargs=None, is_pbr=False):
     os.makedirs(os.path.join(args.model_path, "visualize"), exist_ok=True)
-    if iteration % 1000 == 0 or iteration == first_iter + 1:
+    if iteration % 100 == 0 or iteration == first_iter + 1:
         render_pkg = render_fn(viewpoint_cam, gaussians, pipe, background,
                             )
         visualization_list = [

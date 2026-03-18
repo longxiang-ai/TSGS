@@ -44,8 +44,15 @@ def loadCam(args, id, cam_info, resolution_scale):
     sys.stdout.flush()
 
     if cam_info.K is not None:
+        scale_x = resolution[0] / orig_w
+        scale_y = resolution[1] / orig_h
+        K_scaled = cam_info.K.copy()
+        K_scaled[0, 0] *= scale_x
+        K_scaled[0, 2] *= scale_x
+        K_scaled[1, 1] *= scale_y
+        K_scaled[1, 2] *= scale_y
         return NonCenteredCamera(colmap_id=cam_info.uid, R=cam_info.R, T=cam_info.T, 
-                  K=cam_info.K,
+                  K=K_scaled,
                   image_width=resolution[0], image_height=resolution[1],
                   image_path=cam_info.image_path,
                   image_PIL=cam_info.image,

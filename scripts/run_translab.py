@@ -136,7 +136,7 @@ for scene in scenes:
       common_args += f" --start_threshold {args.start_threshold}"
       common_args += f" --end_threshold {args.end_threshold}"
       common_args += f" --transparency_threshold {args.transparency_threshold}"
-      common_args += " --use_transparent_depth True" if args.use_transparent_depth else ""
+      common_args += " --use_transparent_depth" if args.use_transparent_depth else ""
       cmd = f'CUDA_VISIBLE_DEVICES={gpu_id} python render.py -m {out_base_path}/{scene}/{out_name} {common_args}'
       print(cmd)
       os.system(cmd)
